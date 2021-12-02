@@ -6,8 +6,27 @@
         placeholder="Name"
         v-model="investment.cryptoName"
         @input="filterData"
+        class="search-box"
       />
-      <font-awesome-icon class="icon" icon="search" />
+      <!-- <font-awesome-icon class="icon" icon="search" /> -->
+      <div
+        class="search-box"
+        v-if="investment.matches !== null"
+        v-for="match in investment.matches"
+        :key="match.id"
+      >
+        <div
+          @click.prevent="getCurrentPrice(match.current_price)"
+          class="search-results"
+        >
+          <img class="search-image" :src="match.image" alt="" />
+          <div class="name">
+            <p>{{ match.name }}</p>
+            <span>({{ match.symbol }})</span>
+          </div>
+          <span>#{{ match.market_cap_rank }}</span>
+        </div>
+      </div>
     </div>
     <input
       type="number"
@@ -53,14 +72,23 @@ const retrieveData = async () => {
     store.dispatch("loadCryptos");
   }
 };
-const filterData = () => {
+const filterData = async () => {
   // User inputs will filter through Vuex state to find the crypto by ID or Symbol
   // Stores data retrieved into matches
   let name = investment.cryptoName;
-  let getCrypto = store.getters.getCryptoByName(name);
-  investment.matches = getCrypto;
+  let getCrypto = await store.getters.getCryptoByName(name);
+  // Clear Matches after search
+  if (name === "") {
+    investment.matches = [];
+  } else {
+    console.log(getCrypto);
+    investment.matches = getCrypto;
+  }
 };
-
+const getCurrentPrice = (data) => {
+  investment.purchasePrice = data;
+  investment.matches = [];
+};
 const calcTotal = () => {
   const total = investment.purchasePrice * investment.shareAmount;
   investment.total = total.toFixed(2);
@@ -74,6 +102,7 @@ form {
   border: 1px solid black;
   border-radius: 0.2rem;
   max-width: 35%;
+  color: white;
 }
 input {
 }
@@ -89,7 +118,26 @@ input {
   right: 0;
   margin-right: 10px;
 }
-
+.search-box {
+  margin-bottom: 1.5rem;
+}
+.search-results {
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
+  color: white;
+  margin-bottom: 1rem;
+  align-items: center;
+  text-decoration: none;
+}
+.search-results:hover {
+  cursor: pointer;
+}
+.name {
+  display: flex;
+}
+.search-image {
+  width: 2rem;
+}
 .options {
   display: flex;
   justify-content: space-around;
