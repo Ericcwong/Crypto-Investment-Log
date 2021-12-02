@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <section class="options">
-      <button @click.prevent="NewInvestment = !NewInvestment">
+      <button @click.prevent="newInvestment = !newInvestment">
         New Investment
       </button>
     </section>
