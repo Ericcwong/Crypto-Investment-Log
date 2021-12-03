@@ -1,28 +1,33 @@
 <template>
   <div class="container">
-    <section class="options">
-      <button @click.prevent="newInvestment = !newInvestment">
-        New Investment
-      </button>
+    <section class="">
+      <h1 class="pt-8">
+        Welcome (user), Portfolio is at (price) (up or down percentage)
+      </h1>
     </section>
-    <section class="user-data">
-      <h1>Welcome (user), Portfolio is at (price) (up or down percentage)</h1>
+    <section id="current-investment" class="">
+      <UserInvestment />
+    </section>
+    <section>
+      Market data
+      <MarketData />
     </section>
   </div>
 </template>
 
 <script setup>
-import NewInvestment from "./components/NewInvestment/index.vue";
+import UserInvestment from "./components/UserInvestment/index.vue";
+import MarketData from "./components/MarketData/index.vue";
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   background-color: #1f2033;
   color: white;
   height: 100vh;
+}
+.container {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
 }
 </style>
