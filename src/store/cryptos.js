@@ -3,6 +3,7 @@ import axios from "axios";
 export const store = createStore({
   state: {
     cryptos: [],
+    user: [],
   },
   mutations: {
     loadCryptos(state, payload) {
@@ -17,14 +18,14 @@ export const store = createStore({
     async loadCryptos(context) {
       try {
         // Looping through 1-15 because Coingecko's API only allows 250 per page. Calling in 15 pages
-        for (let i = 1; i < 15; i++) {
-          let response = await axios.get(
-            `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=${i}&sparkline=false`
-          );
-          console.log(response);
-          let cryptos = response.data;
-          context.commit("loadCryptos", cryptos);
-        }
+        // for (let i = 1; i < 15; i++) {
+        //   let response = await axios.get(
+        //     `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=${i}&sparkline=false`
+        //   );
+        //   console.log(response);
+        //   let cryptos = response.data;
+        //   context.commit("loadCryptos", cryptos);
+        // }
       } catch (error) {
         console.log(error);
       }
