@@ -1,6 +1,7 @@
 <template>
-  <div class="container">
-    <section class="">
+  <Navbar />
+  <div class="page-container">
+    <section class="h-16">
       <h1 class="pt-8">
         Welcome (user), Portfolio is at (price) (up or down percentage)
       </h1>
@@ -16,6 +17,7 @@
 </template>
 
 <script setup>
+import Navbar from "./components/UI/Navbar.vue";
 import UserInvestment from "./components/UserInvestment/index.vue";
 import MarketData from "./components/MarketData/index.vue";
 </script>
@@ -25,9 +27,11 @@ import MarketData from "./components/MarketData/index.vue";
   background-color: #1f2033;
   color: white;
   height: 100vh;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
-.container {
+.page-container {
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 4fr 1fr;
 }
 </style>
