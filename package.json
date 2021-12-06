@@ -12,6 +12,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
     "axios": "^0.24.0",
     "cryptocurrencies": "^7.0.0",
+    "firebase": "^9.6.0",
     "vue": "^3.2.16",
     "vuex": "^4.0.2"
   },
