@@ -2,8 +2,9 @@
   <Navbar />
   <div class="page-container">
     <section class="h-16">
-      <h1 class="pt-8">
-        Welcome (user), Portfolio is at (price) (up or down percentage)
+      <h1 class="pt-8" v-if="isLogin">
+        Welcome {{ user.data.displayName.split(" ")[0] }}, Portfolio is at
+        (price) (up or down percentage)
       </h1>
     </section>
     <section id="current-investment" class="">
@@ -17,9 +18,14 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue";
 import Navbar from "./components/UI/Navbar.vue";
 import UserInvestment from "./components/UserInvestment/index.vue";
 import MarketData from "./components/MarketData/index.vue";
+import { store } from "./store/index";
+import { useAuth } from "./firebase";
+
+const { user, isLogin, signOut, signIn } = useAuth();
 </script>
 
 <style>
