@@ -22,10 +22,9 @@ import { ref, onMounted } from "vue";
 import Navbar from "./components/UI/Navbar.vue";
 import UserInvestment from "./components/UserInvestment/index.vue";
 import MarketData from "./components/MarketData/index.vue";
-import { store } from "./store/index";
-import { useAuth } from "./firebase";
+import { useStore } from "vuex";
 
-const { user, isLogin, signOut, signIn } = useAuth();
+const store = useStore();
 </script>
 
 <style>

@@ -22,8 +22,13 @@
 </template>
 
 <script setup>
-import { useAuth } from "../../firebase";
-const { user, isLogin, signOut, signIn } = useAuth();
+import { useStore } from "vuex";
+
+const store = useStore();
+
+const signIn = () => {
+  store.dispatch("user/signIn");
+};
 </script>
 
 <style></style>
