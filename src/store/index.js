@@ -5,10 +5,12 @@ import cryptos from "./modules/cryptos.js";
 import user from "./modules/user";
 const debug = process.env.NODE_ENV !== "production";
 
-export const store = createStore({
+const store = createStore({
   modules: {
     cryptos,
     user,
   },
   plugins: [createPersistedState()],
 });
+
+export default store;
