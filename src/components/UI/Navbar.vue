@@ -11,7 +11,7 @@
       </button>
       <div class="sign-in flex" v-else>
         <div class="avatar mr-4">
-          <img class="rounded-full w-8" :src="user.photoURL" alt="" />
+          <img class="rounded-full w-8" :src="user.data.photoURL" alt="" />
         </div>
         <button class="text-white hover:bg-gray-900" @click="signOut">
           Sign out
