@@ -14,7 +14,8 @@
     "cryptocurrencies": "^7.0.0",
     "firebase": "^9.6.0",
     "vue": "^3.2.16",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.9.3",
