@@ -2,8 +2,10 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
-import { ref, onMounted, computed } from "vue";
-
+import { reactive, onMounted, computed } from "vue";
+import { store } from "./store/index";
+// const store = useStore();
+console.log(store.state.user.user);
 firebase.initializeApp({
   apiKey: "AIzaSyB1L8sGDtfCIyJdYirmgiOIG2S-y_zvDc4",
   authDomain: "crypto-investment-log.firebaseapp.com",
@@ -17,16 +19,22 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 
 export function useAuth() {
-  const user = ref(null);
-  const unsubscribe = auth.onAuthStateChanged((_user) => (user.value = _user));
+  const user = reactive({
+    data: null,
+  });
+  const unsubscribe = auth.onAuthStateChanged((_user) => (user.data = _user));
   onMounted(() => {
     unsubscribe;
   });
-  const isLogin = computed(() => user.value !== null);
+  const isLogin = computed(() => user.data !== null);
   const signIn = async () => {
     const googleProvider = new firebase.auth.GoogleAuthProvider();
     await auth.signInWithPopup(googleProvider);
+    store.commit("user/getUserData", user.data);
   };
-  const signOut = () => auth.signOut();
+  const signOut = () => {
+    store.commit("user/clearUser");
+    auth.signOut();
+  };
   return { user, isLogin, signIn, signOut };
 }
