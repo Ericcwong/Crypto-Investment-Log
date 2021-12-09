@@ -1,5 +1,4 @@
 import { createStore, createLogger } from "vuex";
-import axios from "axios";
 import createPersistedState from "vuex-persistedstate";
 import cryptos from "./modules/cryptos.js";
 import user from "./modules/user";
@@ -10,7 +9,7 @@ const store = createStore({
     cryptos,
     user,
   },
-  plugins: [createPersistedState()],
+  plugins: [createPersistedState(), createLogger()],
 });
 
 export default store;
