@@ -11,7 +11,7 @@
       </button>
       <div class="sign-in flex" v-else>
         <div class="avatar mr-4">
-          <img class="rounded-full w-8" :src="user.data.photoURL" alt="" />
+          <img class="rounded-full w-8" src="" alt="" />
         </div>
         <button class="text-white hover:bg-gray-900" @click="signOut">
           Sign out
@@ -23,12 +23,14 @@
 
 <script setup>
 import { useStore } from "vuex";
-
-const store = useStore();
-
+import { useAuth } from "@/firebase/user.js";
+// const isLogin = false;
+const { user, isLogin, googleSignIn, googleSignOut } = useAuth();
 const signIn = () => {
-  store.dispatch("user/signIn");
+  console.log("user signing in");
+  googleSignIn();
 };
+const signOut = googleSignOut;
 </script>
 
 <style></style>
