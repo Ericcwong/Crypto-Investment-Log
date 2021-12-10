@@ -1,16 +1,17 @@
 <template>
-  <Navbar />
   <div class="page-container">
-    <section class="h-16">
-      <h1 class="pt-8" v-if="isLogin">
+    <Navbar class="navbar" />
+
+    <section class="welcome-banner h-16">
+      <h1 class="pt-8 text-center" v-if="isLogin">
         Welcome {{ user.displayName.split(" ")[0] }}, Portfolio is at (price)
         (up or down percentage)
       </h1>
     </section>
-    <section id="current-investment" class="">
+    <section id="current-investment" class="investment-body">
       <UserInvestment />
     </section>
-    <section>
+    <section class="market-data">
       Market data
       <MarketData />
     </section>
@@ -30,14 +31,34 @@ const { isLogin, user } = useAuth();
 
 <style>
 #app {
-  background-color: #1f2033;
-  color: white;
+  /* background-color: #1f2033; */
+  color: black;
   height: 100vh;
   padding-left: 2rem;
   padding-right: 2rem;
 }
+
 .page-container {
   display: grid;
-  grid-template-rows: 1fr 4fr 1fr;
+  gap: 1rem;
+  grid-template-columns: 15% 85%;
+  grid-template-areas:
+    "navbar welcomeBanner"
+    "investmentBody investmentBody"
+    "marketData marketData";
+  height: 100vh;
+}
+
+.navbar {
+  grid-area: navbar;
+}
+.welcome-banner {
+  grid-area: welcomeBanner;
+}
+.investment-body {
+  grid-area: investmentBody;
+}
+.market-data {
+  grid-area: marketData;
 }
 </style>
