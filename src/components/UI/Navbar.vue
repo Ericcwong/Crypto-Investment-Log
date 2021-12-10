@@ -1,21 +1,18 @@
 <template>
-  <nav class="flex justify-between pt-4">
+  <nav class="navbar">
     <div class="header">Investment Log</div>
     <div class="user">
-      <button
-        v-if="!isLogin"
-        class="text-white hover:bg-gray-500 rounded"
-        @click="signIn"
-      >
+      <button v-if="!isLogin" class="auth-button" @click="signIn">
         Sign in
       </button>
-      <div class="sign-in flex" v-else>
+      <div class="sign-in" v-else>
         <div class="avatar mr-4">
-          <img class="rounded-full w-8" src="" alt="" />
+          <!-- Future features -->
+          <ul>
+            <li>My account</li>
+          </ul>
         </div>
-        <button class="text-white hover:bg-gray-900" @click="signOut">
-          Sign out
-        </button>
+        <button class="auth-button" @click="signOut">Sign out</button>
       </div>
     </div>
   </nav>
@@ -26,6 +23,7 @@ import { useStore } from "vuex";
 import { useAuth } from "@/firebase/user.js";
 // const isLogin = false;
 const { user, isLogin, googleSignIn, googleSignOut } = useAuth();
+console.log(user);
 const signIn = () => {
   console.log("user signing in");
   googleSignIn();
@@ -33,4 +31,22 @@ const signIn = () => {
 const signOut = googleSignOut;
 </script>
 
-<style></style>
+<style scoped>
+.navbar {
+  background-color: rgb(91, 114, 114);
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px,
+    rgba(0, 0, 0, 0.05) 0px 5px 10px;
+}
+.header {
+  font-size: 2rem;
+  text-align: center;
+  border-bottom: 1px solid black;
+}
+.user-image {
+  border-radius: 50%;
+  width: 6rem;
+}
+li {
+  font-size: 1.2rem;
+}
+</style>
