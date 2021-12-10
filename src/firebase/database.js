@@ -1,3 +1,4 @@
+import { firebaseApp } from "./config";
 import {
   getFirestore,
   collection,
@@ -5,3 +6,5 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
+
+const db = getFirestore(firebaseApp);
