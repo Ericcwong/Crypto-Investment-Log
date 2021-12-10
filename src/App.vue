@@ -3,10 +3,7 @@
     <Navbar class="navbar" />
 
     <section class="welcome-banner h-16">
-      <h1 class="pt-8 text-center" v-if="isLogin">
-        Welcome {{ user.displayName.split(" ")[0] }}, Portfolio is at (price)
-        (up or down percentage)
-      </h1>
+      <WelcomeBanner />
     </section>
     <section id="current-investment" class="investment-body">
       <UserInvestment />
@@ -19,14 +16,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
 import Navbar from "./components/UI/Navbar.vue";
 import UserInvestment from "./components/UserInvestment/index.vue";
 import MarketData from "./components/MarketData/index.vue";
-import { useStore } from "vuex";
-import { useAuth } from "./firebase/user";
-
-const { isLogin, user } = useAuth();
+import WelcomeBanner from "./components/WelcomeBanner.vue";
 </script>
 
 <style>
