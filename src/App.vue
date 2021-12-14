@@ -1,16 +1,15 @@
 <template>
-  <Navbar />
-  <router-view></router-view>
+  <div class="bg-white text-black dark:bg-gray-900 dark:text-white pr-20 pl-20">
+    <Navbar />
+    <router-view></router-view>
+  </div>
 </template>
 
 <script setup>
 import Navbar from "./components/UI/Navigation/Navbar.vue";
-import UserInvestment from "./components/UserInvestment/index.vue";
-import MarketData from "./components/MarketData/index.vue";
-import WelcomeBanner from "./components/WelcomeBanner.vue";
 </script>
 
-<style>
+<style scoped>
 #app {
   /* background-color: #1f2033; */
   color: black;
