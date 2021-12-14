@@ -1,11 +1,14 @@
 <template>
-  <nav class="navbar">
+  <nav class="navbar bg-gray-600">
     <div class="header">Investment Log</div>
     <div class="user">
-      <button v-if="!isLogin" class="auth-button" @click="signIn">
-        Sign in
-      </button>
-      <div class="sign-in" v-else>
+      <!-- Sign in -->
+      <div class="signIn" v-if="!isLogin">
+        <SignInModal :googleSignIn="signIn" />
+      </div>
+
+      <!-- Logged in -->
+      <div class="user" v-else>
         <div class="avatar mr-4">
           <!-- Future features -->
           <ul>
@@ -13,7 +16,6 @@
           </ul>
         </div>
         <button class="auth-button" @click="signOut">Sign out</button>
-        <Modal />
       </div>
     </div>
   </nav>
@@ -22,7 +24,8 @@
 <script setup>
 import { useStore } from "vuex";
 import { useAuth } from "@/firebase/user.js";
-import Modal from "@/components/UI/Modal/index.vue";
+import SignInModal from "./Auth/SignIn.vue";
+import Register from "./Auth/Register.vue";
 // const isLogin = false;
 const { user, isLogin, googleSignIn, googleSignOut } = useAuth();
 console.log(user);
@@ -31,24 +34,7 @@ const signIn = () => {
   googleSignIn();
 };
 const signOut = googleSignOut;
+const darkMode = () => {};
 </script>
 
-<style scoped>
-.navbar {
-  background-color: rgb(91, 114, 114);
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px,
-    rgba(0, 0, 0, 0.05) 0px 5px 10px;
-}
-.header {
-  font-size: 2rem;
-  text-align: center;
-  border-bottom: 1px solid black;
-}
-.user-image {
-  border-radius: 50%;
-  width: 6rem;
-}
-li {
-  font-size: 1.2rem;
-}
-</style>
+<style scoped></style>
