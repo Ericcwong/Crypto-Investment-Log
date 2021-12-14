@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    <section class="welcome-banner h-16">
+    <section class="welcome-banner h-16" v-if="isLogin">
       <WelcomeBanner />
     </section>
     <section id="current-investment" class="investment-body">
@@ -14,12 +14,14 @@
 </template>
 
 <script setup>
+import WelcomeBanner from "@/components/UI/HomePage/WelcomeBanner.vue";
 import UserInvestment from "@/components/UserInvestment/index.vue";
 import MarketData from "@/components/MarketData/index.vue";
-import WelcomeBanner from "@/components/WelcomeBanner.vue";
+import { useAuth } from "@/firebase/user";
+const { isLogin, user } = useAuth();
 </script>
 
-<style>
+<style scoped>
 #app {
   /* background-color: #1f2033; */
   color: black;
