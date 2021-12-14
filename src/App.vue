@@ -1,22 +1,10 @@
 <template>
-  <div class="page-container">
-    <Navbar class="navbar" />
-
-    <section class="welcome-banner h-16">
-      <WelcomeBanner />
-    </section>
-    <section id="current-investment" class="investment-body">
-      <UserInvestment />
-    </section>
-    <section class="market-data">
-      Market data
-      <MarketData />
-    </section>
-  </div>
+  <Navbar />
+  <router-view></router-view>
 </template>
 
 <script setup>
-import Navbar from "./components/UI/Navbar.vue";
+import Navbar from "./components/UI/Navigation/Navbar.vue";
 import UserInvestment from "./components/UserInvestment/index.vue";
 import MarketData from "./components/MarketData/index.vue";
 import WelcomeBanner from "./components/WelcomeBanner.vue";
@@ -29,29 +17,5 @@ import WelcomeBanner from "./components/WelcomeBanner.vue";
   height: 100vh;
   padding-left: 2rem;
   padding-right: 2rem;
-}
-
-.page-container {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: 15% 85%;
-  grid-template-areas:
-    "navbar welcomeBanner"
-    "investmentBody investmentBody"
-    "marketData marketData";
-  height: 100vh;
-}
-
-.navbar {
-  grid-area: navbar;
-}
-.welcome-banner {
-  grid-area: welcomeBanner;
-}
-.investment-body {
-  grid-area: investmentBody;
-}
-.market-data {
-  grid-area: marketData;
 }
 </style>
