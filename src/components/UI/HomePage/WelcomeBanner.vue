@@ -1,6 +1,5 @@
 <template>
-  <h1 class="text-center" v-if="!isLogin">Loading data...</h1>
-  <h1 class="pt-8 text-center" v-else>
+  <h1 class="pt-8 text-center" v-if="isLogin">
     Welcome {{ user.displayName.split(" ")[0] }}, Portfolio is at (price) (up or
     down percentage)
   </h1>
