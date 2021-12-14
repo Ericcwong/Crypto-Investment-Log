@@ -17,6 +17,7 @@
           items-center
         "
         v-if="isOpen"
+        @click="isOpen = false"
       >
         <div class="bg-white p-12 border border-black">
           <h2>Modal test</h2>
