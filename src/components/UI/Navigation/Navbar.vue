@@ -13,6 +13,7 @@
           </ul>
         </div>
         <button class="auth-button" @click="signOut">Sign out</button>
+        <Modal />
       </div>
     </div>
   </nav>
@@ -21,6 +22,7 @@
 <script setup>
 import { useStore } from "vuex";
 import { useAuth } from "@/firebase/user.js";
+import Modal from "@/components/UI/Modal/index.vue";
 // const isLogin = false;
 const { user, isLogin, googleSignIn, googleSignOut } = useAuth();
 console.log(user);
