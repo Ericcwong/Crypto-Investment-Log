@@ -41,7 +41,7 @@
             />
             <button class="mt-3 rounded bg-gray-200">Log In</button>
           </form>
-          <h3 class="pt-4">Other Accounts</h3>
+          <h3 class="pt-4">Sign in with</h3>
           <h4>
             <button @click="googleSignIn">
               <img
