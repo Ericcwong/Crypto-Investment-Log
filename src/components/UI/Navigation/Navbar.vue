@@ -28,7 +28,6 @@ import SignInModal from "./Auth/SignIn.vue";
 import Register from "./Auth/Register.vue";
 // const isLogin = false;
 const { user, isLogin, googleSignIn, googleSignOut } = useAuth();
-console.log(user);
 const signIn = () => {
   console.log("user signing in");
   googleSignIn();
