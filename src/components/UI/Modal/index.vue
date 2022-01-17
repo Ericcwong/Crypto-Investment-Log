@@ -38,7 +38,6 @@ const props = defineProps({
 // Vue emit lets us emit, or send, custom events from a child component to its parent.
 const emit = defineEmits(["close"]);
 const close = (data) => {
-  console.log(data);
   emit("close");
 };
 </script>
