@@ -7,11 +7,13 @@ import {
   faSearch,
   faTimes,
   faTimesCircle,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import "./styles/style.css";
+import "./style.css";
 
-library.add(faSearch, faTimes, faTimesCircle);
+library.add(faSearch, faTimes, faTimesCircle, faGoogle, faPlus);
 
 createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon)
