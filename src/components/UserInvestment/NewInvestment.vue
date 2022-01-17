@@ -8,7 +8,7 @@
         @input="filterData"
         class="search-box"
       />
-      <!-- <font-awesome-icon class="icon" icon="search" /> -->
+      <font-awesome-icon class="icon" icon="search" />
       <div
         class="search-box"
         v-if="investment.matches !== null"
@@ -51,8 +51,9 @@
 </template>
 
 <script setup>
-import { onMounted, reactive } from "vue";
+import { onMounted, reactive, computed } from "vue";
 import { useStore } from "vuex";
+import { mapGetters } from "vuex";
 const store = useStore();
 const investment = reactive({
   cryptoName: "",
@@ -63,20 +64,22 @@ const investment = reactive({
 });
 onMounted(() => {
   retrieveData();
-  filterData();
+  //   filterData();
 });
+
 const retrieveData = async () => {
   // Checks if Vuex state is empty, if so call and update the data
   if (store.state.cryptos !== []) {
     console.log("Updating State");
-    store.dispatch("loadCryptos");
+    store.dispatch("cryptos/loadCryptos");
   }
 };
 const filterData = async () => {
   // User inputs will filter through Vuex state to find the crypto by ID or Symbol
   // Stores data retrieved into matches
   let name = investment.cryptoName;
-  let getCrypto = await store.getters.getCryptoByName(name);
+  let getCrypto = await store.getters["cryptos/getCryptoByName"](name);
+  //   console.log(store);
   // Clear Matches after search
   if (name === "") {
     investment.matches = [];
@@ -96,7 +99,7 @@ const calcTotal = () => {
 </script>
 
 <style scoped>
-form {
+/* form {
   display: grid;
   padding: 2rem;
   border: 1px solid black;
@@ -141,5 +144,5 @@ input {
 .options {
   display: flex;
   justify-content: space-around;
-}
+} */
 </style>
