@@ -1,21 +1,9 @@
 <template>
   <div class="relative">
-    <button @click="isOpen = true">Sign In</button>
     <!-- Teleport is a Vue 3 feature. When the value of isOpen is set to true, the modal would be placed in the body element. Positioned with CSS -->
     <teleport to="body">
       <div
-        class="
-          modal
-          absolute
-          top-0
-          left-0
-          w-full
-          h-full
-          bg-background-blur
-          flex
-          justify-center
-          items-center
-        "
+        class="modal absolute top-0 left-0 w-full h-full bg-background-blur flex justify-center items-center"
         v-if="isOpen"
       >
         <div class="bg-gray-50 w-96 p-3 border border-black rounded-md">
