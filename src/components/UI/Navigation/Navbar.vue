@@ -1,21 +1,28 @@
 <template>
-  <nav class="navbar bg-gray-600">
-    <div class="header">Investment Log</div>
-    <div class="user">
+  <nav class="bg-gray-600 flex flex-col items-center">
+    <div class="text-3xl flex-none basis-full">Investment Log</div>
+    <div class="flex user justify-center items-center flex-auto">
       <!-- Sign in -->
-      <div class="signIn" v-if="!isLogin">
+      <Button
+        v-if="!isLogin"
+        @runFunction="googleSignIn"
+        :Icon="['fab', 'google']"
+        name="Sign In"
+      ></Button>
+
+      <!-- <div class="signIn" v-if="!isLogin">
         <SignInModal :googleSignIn="signIn" />
-      </div>
+      </div> -->
 
       <!-- Logged in -->
       <div class="user" v-else>
         <div class="avatar mr-4">
           <!-- Future features -->
-          <ul>
-            <li>My account</li>
-          </ul>
+          <Button name="My Account"></Button>
         </div>
-        <button class="auth-button" @click="signOut">Sign out</button>
+        <UserInvestment />
+
+        <Button @runFunction="googleSignOut" name="Sign Out"></Button>
       </div>
     </div>
   </nav>
@@ -26,14 +33,13 @@ import { useStore } from "vuex";
 import { useAuth } from "@/firebase/user.js";
 import SignInModal from "./Auth/SignIn.vue";
 import Register from "./Auth/Register.vue";
+import Button from "@/components/UI/Button.vue";
+import UserInvestment from "@/components/UserInvestment/index.vue";
+
 // const isLogin = false;
 const { user, isLogin, googleSignIn, googleSignOut } = useAuth();
-const signIn = () => {
-  console.log("user signing in");
-  googleSignIn();
-};
+googleSignIn();
 const signOut = googleSignOut;
-const darkMode = () => {};
 </script>
 
 <style scoped></style>
