@@ -1,11 +1,15 @@
 <template>
   <div class="flex justify-evenly">
-    <p>Current investments</p>
-    <button class="text-white rounded bg-gray-500 px-3">New Investment</button>
+    <!-- <p>Current investments</p> -->
+    <Button
+      @runFunction="toggleModal"
+      Icon="plus"
+      name="New Investment"
+    ></Button>
     <Modal @close="toggleModal" :modalActive="modalActive">
       <NewInvestment />
     </Modal>
-    <button @click="toggleModal" v-if="!modalActive">Open Modal</button>
+    <!-- <button @click="toggleModal" v-if="!modalActive">Open Modal</button> -->
   </div>
 </template>
 
@@ -13,6 +17,7 @@
 import { ref } from "vue";
 import Modal from "@/components/UI/Modal/index.vue";
 import NewInvestment from "./NewInvestment.vue";
+import Button from "@/components/UI/Button.vue";
 const modalActive = ref(false);
 const toggleModal = () => {
   modalActive.value = !modalActive.value;
