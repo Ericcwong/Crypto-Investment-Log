@@ -1,6 +1,5 @@
 <template>
   <div class="flex justify-evenly">
-    <!-- <p>Current investments</p> -->
     <Button
       @runFunction="toggleModal"
       Icon="plus"

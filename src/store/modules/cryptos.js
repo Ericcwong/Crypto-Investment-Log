@@ -10,11 +10,15 @@ const mutations = {
       state.cryptos.push(element);
     });
   },
+  clearState(state) {
+    state.cryptos = [];
+  },
 };
 const actions = {
   //   Pull cryptos for autocomplete from Coingecko
   async loadCryptos(context) {
     try {
+      context.commit("clearState");
       // Looping through 1-15 because Coingecko's API only allows 250 per page. Calling in 15 pages
       for (let i = 1; i < 2; i++) {
         let response = await axios.get(
