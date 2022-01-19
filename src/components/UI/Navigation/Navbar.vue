@@ -1,6 +1,6 @@
 <template>
   <nav class="bg-gray-600 flex flex-col items-center">
-    <div class="text-3xl flex-none basis-full">Investment Log</div>
+    <div class="text-xl">Investment Log</div>
     <div class="flex user justify-center items-center flex-auto">
       <!-- Sign in -->
       <Button
@@ -38,8 +38,6 @@ import UserInvestment from "@/components/UserInvestment/index.vue";
 
 // const isLogin = false;
 const { user, isLogin, googleSignIn, googleSignOut } = useAuth();
-googleSignIn();
-const signOut = googleSignOut;
 </script>
 
 <style scoped></style>
