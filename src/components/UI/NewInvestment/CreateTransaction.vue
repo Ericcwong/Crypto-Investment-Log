@@ -17,7 +17,7 @@
     </div>
     <!-- User input -->
     <form action="" class="grid items-center justify-center text-xl">
-      <label for="price-per-coin">Price Per Coin</label>
+      <label for="price-per-coin">Current Price Per Coin</label>
       <input
         type="number"
         v-model="coinData.price"
@@ -36,31 +36,45 @@
         ${{ coinData.total }}
       </div>
       <div class="" v-else-if="coinData.transaction === 'Sell'">
-        Total Received
-        {{ coinData.transaction }}
+        <p>Total Received</p>
+        ${{ coinData.total }}
       </div>
       <div class="" v-else>{{ coinData.transaction }}</div>
     </form>
+    <Goal :data="data" />
+    <div class="flex justify-end">
+      <button
+        @click.prevent="createInvestment"
+        class="border p-2 bg-gray-500 text-white rounded-2xl mr-10"
+      >
+        Submit
+      </button>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted } from "vue";
+import { addInvestment } from "@/firebase/database.js";
+import Goal from "./Goal.vue";
 const props = defineProps({
   crypto: Object,
 });
+const data = props.crypto;
 const coinData = reactive({
   price: props.crypto.current_price,
   quantity: 1,
   transaction: "Buy",
   total: null,
 });
-
 const transactions = ref([
   { name: "Buy" },
   { name: "Sell" },
   { name: "Transfer" },
 ]);
+onMounted(() => {
+  calcTotal();
+});
 const calcTotal = () => {
   const total = coinData.price * coinData.quantity;
   coinData.total = total.toFixed(2);
@@ -68,5 +82,8 @@ const calcTotal = () => {
 const transaction = (data) => {
   coinData.transaction = data;
   calcTotal();
+};
+const createInvestment = () => {
+  addInvestment(coinData);
 };
 </script>
