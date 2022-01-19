@@ -14,7 +14,7 @@
  */
 const props = defineProps({
   name: String,
-  Icon: String,
+  Icon: null,
 });
 const emit = defineEmits(["runFunction"]);
 const runFunction = (data) => {
