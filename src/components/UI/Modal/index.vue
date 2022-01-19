@@ -16,7 +16,7 @@
         <!-- Modal Content -->
         <div
           v-show="modalActive"
-          class="relative max-w-screen-sm w-5/6 bg-white p-16"
+          class="relative max-w-screen-sm h-3/6 w-5/6 bg-white p-16"
         >
           <font-awesome-icon
             @click="close"
@@ -24,7 +24,7 @@
             icon="times-circle"
           />
           <slot />
-          <button class="" @click="close">Close</button>
+          <!-- <button class="absolute bottom-0" @click="close">Close</button> -->
         </div>
       </transition>
     </div>
