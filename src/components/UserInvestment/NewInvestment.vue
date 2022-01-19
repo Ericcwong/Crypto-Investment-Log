@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import SearchResults from "@/components/UI/NewInvestment/Results.vue";
+import SearchResults from "@/components/UI/NewInvestment/SearchResults.vue";
 import CreateTransaction from "@/components/UI/NewInvestment/CreateTransaction.vue";
 import { onMounted, reactive, computed } from "vue";
 import { useStore } from "vuex";
