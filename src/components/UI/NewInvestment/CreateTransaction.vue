@@ -6,85 +6,58 @@
     </div>
     <h2 class="text-center">Add Transaction... (Portfolio future upgrade)</h2>
     <!-- Buy Sell Transfer buttons -->
-    <div class="flex justify-evenly bg-gray-800 p-4">
+    <div class="flex justify-evenly text-white bg-gray-800 p-4">
       <button
         @click="transaction(trans.name)"
         v-for="trans in transactions"
-        class="text-xl text-white"
+        class="text-xl"
       >
         {{ trans.name }}
       </button>
     </div>
-    <!-- User input -->
-    <form action="" class="grid items-center justify-center text-xl">
-      <label for="price-per-coin">Current Price Per Coin</label>
-      <input
-        type="number"
-        v-model="coinData.price"
-        @input="calcTotal"
-        class="border-2 border-gray-500"
-      />
-      <label for="price-per-coin">Quantity</label>
-      <input
-        type="number"
-        v-model="coinData.quantity"
-        @input="calcTotal"
-        class="border-2 border-gray-500"
-      />
-      <div class="" v-if="coinData.transaction === 'Buy'">
-        <p>Total Spent</p>
-        ${{ coinData.total }}
-      </div>
-      <div class="" v-else-if="coinData.transaction === 'Sell'">
-        <p>Total Received</p>
-        ${{ coinData.total }}
-      </div>
-      <div class="" v-else>{{ coinData.transaction }}</div>
-    </form>
-    <Goal :data="data" />
-    <div class="flex justify-end">
-      <button
-        @click.prevent="createInvestment"
-        class="border p-2 bg-gray-500 text-white rounded-2xl mr-10"
-      >
-        Submit
-      </button>
-    </div>
+    <TransactionForm
+      :price="crypto.current_price"
+      :transaction="coinData.transaction"
+      @change="updateData"
+    />
+
+    <Goal @change="updateGoal" :data="data" />
   </div>
+  <Button @runFunction="createInvestment" name="Submit" />
 </template>
 
 <script setup>
 import { reactive, ref, onMounted } from "vue";
 import { addInvestment } from "@/firebase/database.js";
+import Button from "@/components/UI/Button.vue";
+import TransactionForm from "./TransactionForm.vue";
 import Goal from "./Goal.vue";
 const props = defineProps({
   crypto: Object,
 });
 const data = props.crypto;
 const coinData = reactive({
-  price: props.crypto.current_price,
-  quantity: 1,
+  data: null,
   transaction: "Buy",
-  total: null,
+  goal: null,
 });
 const transactions = ref([
   { name: "Buy" },
   { name: "Sell" },
   { name: "Transfer" },
 ]);
-// Calculates the total when the component loads in. Or else it would just be blank.
-onMounted(() => {
-  calcTotal();
-});
-// Calculation the total cost
-const calcTotal = () => {
-  const total = coinData.price * coinData.quantity;
-  coinData.total = total.toFixed(2);
+const updateData = (event) => {
+  console.log(event);
+  coinData.data = event;
+};
+const updateGoal = (event) => {
+  console.log(event);
+  coinData.goal = event;
 };
 // Checks what kind of transaction was taken place. Exp: Buy, Sell, Transfer
 const transaction = (data) => {
+  console.log(data);
   coinData.transaction = data;
-  calcTotal();
 };
 // addInvestment comes from firebase file
 const createInvestment = () => {
