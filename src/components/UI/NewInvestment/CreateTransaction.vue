@@ -1,16 +1,16 @@
 <template>
   <div v-if="crypto !== null" class="border">
-    <div class="flex items-center">
+    <div class="flex items-center justify-center">
       <img :src="crypto.image" alt="" class="w-12" />
       <h1 class="text-4xl">{{ crypto.name }}</h1>
     </div>
     <h2 class="text-center">Add Transaction... (Portfolio future upgrade)</h2>
     <!-- Buy Sell Transfer buttons -->
-    <div class="flex justify-evenly">
+    <div class="flex justify-evenly bg-gray-800 p-4">
       <button
         @click="transaction(trans.name)"
         v-for="trans in transactions"
-        class="text-xl"
+        class="text-xl text-white"
       >
         {{ trans.name }}
       </button>
