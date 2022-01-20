@@ -72,17 +72,21 @@ const transactions = ref([
   { name: "Sell" },
   { name: "Transfer" },
 ]);
+// Calculates the total when the component loads in. Or else it would just be blank.
 onMounted(() => {
   calcTotal();
 });
+// Calculation the total cost
 const calcTotal = () => {
   const total = coinData.price * coinData.quantity;
   coinData.total = total.toFixed(2);
 };
+// Checks what kind of transaction was taken place. Exp: Buy, Sell, Transfer
 const transaction = (data) => {
   coinData.transaction = data;
   calcTotal();
 };
+// addInvestment comes from firebase file
 const createInvestment = () => {
   addInvestment(coinData);
 };

@@ -27,18 +27,17 @@ const goal = reactive({
   marketcapDifference: null,
   marketcapPercentage: null,
 });
-
+// Calculates all the data
 const calcGoal = () => {
+  // What the marketcap needs to hit to get the price
   const marketcapValue = goal.price * props.data.circulating_supply;
   goal.marketcap = marketcapValue.toLocaleString();
-
+  // Waits for marketValue to update. Then calculates the needed remaining amount to hit the desired amount.
   if (marketcapValue !== 0) {
     const marketcapDifference = marketcapValue - props.data.market_cap;
     const marketcapPercentage =
       (marketcapDifference / props.data.market_cap) * 100;
-    console.log(marketcapPercentage);
     goal.marketcapPercentage = marketcapPercentage.toFixed(3);
-    // console.log(marketcapDifference);
     goal.marketcapDifference = marketcapDifference.toLocaleString();
   } else {
     return (goal.marketcapDifference = 0), (goal.marketcapPercentage = 0);

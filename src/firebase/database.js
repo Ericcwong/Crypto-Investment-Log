@@ -7,9 +7,9 @@ import {
   addDoc,
   getDocs,
 } from "firebase/firestore";
-
+// Database base
 const db = getFirestore(firebaseApp);
-
+// Collection Reference
 const colRef = collection(db, "investment");
 
 export const addInvestment = (data) => {
