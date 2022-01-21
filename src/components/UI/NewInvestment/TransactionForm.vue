@@ -1,7 +1,7 @@
 <template>
   <div class="grid sm:grid-cols-1 md:grid-cols-2">
     <!-- User input -->
-    <form action="" class="flex flex-col w-full text-xl">
+    <form action="" class="flex flex-col w-full text-lg">
       <label for="price-per-coin">Current Price Per Coin</label>
       <input
         type="number"
@@ -25,10 +25,10 @@
         <input v-model="data.date" type="date" id="sell" name="Sell" />
       </div>
     </form>
-    <div class="flex items-center justify-center">
-      <p v-if="transaction === 'Buy'" class="text-xl">Total Spent</p>
+    <div class="flex flex-col items-center justify-center text-xl">
+      <p v-if="transaction === 'Buy'">Total Spent</p>
       <p v-else-if="transaction === 'Sell'">Total Received</p>
-      <span class="text-xl"> ${{ data.total }}</span>
+      <span> ${{ data.total }}</span>
     </div>
   </div>
 </template>
