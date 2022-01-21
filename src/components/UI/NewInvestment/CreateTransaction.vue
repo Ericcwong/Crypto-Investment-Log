@@ -1,5 +1,6 @@
 <template>
   <div v-if="crypto !== null" class="border">
+    <!-- Header -->
     <div class="flex items-center justify-center">
       <img :src="crypto.image" alt="" class="w-12" />
       <h1 class="text-4xl">{{ crypto.name }}</h1>
@@ -20,7 +21,6 @@
       :transaction="coinData.transaction"
       @change="updateData"
     />
-
     <Goal @change="updateGoal" :data="data" />
   </div>
   <Button @runFunction="createInvestment" name="Submit" />
@@ -46,12 +46,11 @@ const transactions = ref([
   { name: "Sell" },
   { name: "Transfer" },
 ]);
+// Both updateData and updateGoal update state whenever the components data changes.
 const updateData = (event) => {
-  console.log(event);
   coinData.data = event;
 };
 const updateGoal = (event) => {
-  console.log(event);
   coinData.goal = event;
 };
 // Checks what kind of transaction was taken place. Exp: Buy, Sell, Transfer
