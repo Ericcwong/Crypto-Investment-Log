@@ -20,7 +20,7 @@
         >
           <font-awesome-icon
             @click="close"
-            class="text-black absolute top-4 right-4 text-lg cursor-pointer hover:text-red-500"
+            class="text-black absolute top-4 right-4 text-3xl cursor-pointer hover:text-red-500"
             icon="times-circle"
           />
           <slot />
