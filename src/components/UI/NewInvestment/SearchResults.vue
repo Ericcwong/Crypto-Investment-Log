@@ -3,12 +3,12 @@
     <div class="" v-for="match in matches" :key="match.id">
       <div
         @click="getMatch(match)"
-        class="flex items-center hover: cursor-pointer"
+        class="flex items-center hover:cursor-pointer mt-4 mb-4"
       >
-        <img class="w-12" :src="match.image" alt="" />
+        <img class="w-12 mr-4" :src="match.image" alt="" />
         <p>{{ match.name }}</p>
         <span class="uppercase">({{ match.symbol }})</span>
-        <span>#{{ match.market_cap_rank }}</span>
+        <span class="ml-4">#{{ match.market_cap_rank }}</span>
       </div>
     </div>
   </div>
