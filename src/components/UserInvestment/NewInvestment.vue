@@ -1,18 +1,16 @@
 <template>
   <!-- Wait for User to input a crypto the want -->
-  <form>
-    <div class="flex justify-between items-center border w-2/4">
-      <span class="z-10 absolute">
-        <font-awesome-icon class="icon ml-1" icon="search" />
-      </span>
-      <input
-        type="text"
-        placeholder="Name"
-        v-model="investment.cryptoName"
-        @input="filterData"
-        class="w-full outline-none pl-6 relative"
-      />
-    </div>
+  <form class="flex justify-between items-center border-zinc-700 border-2 mb-4">
+    <span class="z-10 absolute">
+      <font-awesome-icon class="icon ml-1" icon="search" />
+    </span>
+    <input
+      type="text"
+      placeholder="Start search"
+      v-model="investment.cryptoName"
+      @input="filterData"
+      class="w-full outline-none pl-6 relative"
+    />
   </form>
   <SearchResults
     @getPrice="getCurrentPrice"
