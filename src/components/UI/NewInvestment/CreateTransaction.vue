@@ -1,5 +1,5 @@
 <template>
-  <div v-if="crypto !== null" class="border">
+  <div v-if="crypto !== null" class="">
     <!-- Header -->
     <div class="flex items-center justify-center">
       <img :src="crypto.image" alt="" class="w-12" />
@@ -37,15 +37,12 @@ const props = defineProps({
 });
 const data = props.crypto;
 const coinData = reactive({
+  collection: props.crypto.id,
   data: null,
-  transaction: "Buy",
   goal: null,
+  transaction: "Buy",
 });
-const transactions = ref([
-  { name: "Buy" },
-  { name: "Sell" },
-  { name: "Transfer" },
-]);
+const transactions = ref([{ name: "Buy" }, { name: "Sell" }, { name: "Swap" }]);
 // Both updateData and updateGoal update state whenever the components data changes.
 const updateData = (event) => {
   coinData.data = event;
