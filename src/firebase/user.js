@@ -10,7 +10,7 @@ import {
 import store from "@/store/index.js";
 // Vue functions
 import { computed, onUnmounted, ref } from "vue";
-import { loadInvestments } from "./database";
+// import { loadInvestments } from "./database";
 // Calling auth function from firebase and using the configuration.
 const auth = getAuth(firebaseApp);
 
@@ -23,7 +23,8 @@ export const useAuth = () => {
     message: null,
   };
   const unsubscribe = auth.onAuthStateChanged((userData) => {
-    loadInvestments(userData.uid);
+    // loadInvestments(userData.uid);
+    store.commit("user/getUserData", userData);
     user.value = userData;
   });
   onUnmounted(unsubscribe);

@@ -6,6 +6,7 @@ const state = {
 
 const mutations = {
   getUserData(state, payload) {
+    // console.log(payload);
     state.user = payload;
   },
   loginErrorCode(state, { errorCode, errorMessage }) {
