@@ -9,9 +9,8 @@ import {
   setDoc,
   doc,
 } from "firebase/firestore";
-import { useAuth } from "./user";
 // User needs to have an account to start saving data to their UID
-const { user, isLogin, googleSignIn, googleSignOut } = useAuth();
+
 // Database base
 const db = getFirestore(firebaseApp);
 // Collection Reference
@@ -20,10 +19,12 @@ const colRef = collection(db, "investment");
 
 export const loadInvestments = async (data) => {
   try {
+    console.log(data);
     const loadDoc = await getDocs(collection(db, "investment"));
     loadDoc.forEach((doc) => {
       console.log(doc.data());
     });
+    console.log(loadDoc);
   } catch (error) {
     console.log(error);
   }
@@ -31,8 +32,6 @@ export const loadInvestments = async (data) => {
 
 export const addInvestment = async (data) => {
   try {
-    const userData = user;
-    const userUID = await userData._value.uid;
     console.log(user);
     console.log("Document Data", data.collection);
 
@@ -45,5 +44,3 @@ export const addInvestment = async (data) => {
     console.log(error);
   }
 };
-
-loadInvestments();

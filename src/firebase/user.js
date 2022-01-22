@@ -10,7 +10,7 @@ import {
 import store from "@/store/index.js";
 // Vue functions
 import { computed, onUnmounted, ref } from "vue";
-
+import { loadInvestments } from "./database";
 // Calling auth function from firebase and using the configuration.
 const auth = getAuth(firebaseApp);
 
@@ -22,9 +22,10 @@ export const useAuth = () => {
     code: null,
     message: null,
   };
-  const unsubscribe = auth.onAuthStateChanged(
-    (userData) => (user.value = userData)
-  );
+  const unsubscribe = auth.onAuthStateChanged((userData) => {
+    loadInvestments(userData.uid);
+    user.value = userData;
+  });
   onUnmounted(unsubscribe);
   // isLogin helps reactive components check authentication state.
   const isLogin = computed(() => user.value !== null);
