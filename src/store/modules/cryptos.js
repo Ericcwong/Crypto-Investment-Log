@@ -2,6 +2,7 @@ import axios from "axios";
 
 const state = () => ({
   cryptos: [],
+  userCryptos: [],
 });
 const mutations = {
   loadCryptos(state, payload) {
@@ -10,7 +11,11 @@ const mutations = {
       state.cryptos.push(element);
     });
   },
+  loadUserCrypto(state, payload) {
+    state.userCryptos.push(payload);
+  },
   clearState(state) {
+    state.userCryptos = [];
     state.cryptos = [];
   },
 };
@@ -30,6 +35,15 @@ const actions = {
       }
     } catch (error) {
       console.log(error);
+    }
+  },
+  async loadUserCryptos(context, payload) {
+    try {
+      console.log(payload);
+      // context.commit("clearState");
+      // context.commit("loadUserCrypto", payload.data);
+    } catch (error) {
+      console.log("Loading user's crypto", error);
     }
   },
 };
