@@ -40,8 +40,7 @@ const actions = {
   async loadUserCryptos(context, payload) {
     try {
       console.log(payload);
-      // context.commit("clearState");
-      // context.commit("loadUserCrypto", payload.data);
+      context.commit("loadUserCrypto", payload);
     } catch (error) {
       console.log("Loading user's crypto", error);
     }
