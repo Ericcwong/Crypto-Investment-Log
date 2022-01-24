@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 // User needs to have an account to start saving data to their UID
 import store from "@/store/index.js";
+console.log(store);
 const userUID = await store.state.user.user.uid;
 // Database base
 const db = getFirestore(firebaseApp);
@@ -21,40 +22,37 @@ const colRef = collection(db, "investment");
 
 export const loadInvestments = async (data) => {
   try {
-    // DB to investment
     const subCol = [];
+    // Target top level collection
     const investmentRef = collection(db, "investment");
+    // Target investment collection, find document that is user's id
     const q = query(investmentRef, where("user_id", "==", userUID));
+    /* Get Documents, documents house save crypto_data.
+     * crypto_data is an array that houses all the crypto names the user's have created in new investment.
+     */
     const querySnapshot = await getDocs(q);
-    console.log(querySnapshot);
-
+    // Extracts all the data saved in crypto_data and pushes it to subCol
     querySnapshot.forEach((doc) => {
-      // console.log(doc.data().crypto_data);
-      // subCol.push(doc.data().crypto_data);
       doc.data().crypto_data.forEach((getSubCol) => {
         subCol.push(getSubCol);
       });
-      // console.log(subCol);
     });
+    // Retrieve all the documents that save into each sub collection.
     subCol.forEach(async (element) => {
+      // base object
+      let crypto = {};
+      // Creates an object with element name and creates an empty array to store document data.
+      crypto[element] = new Array();
+
       const loadDoc = await getDocs(
         collection(db, "investment", userUID, element)
       );
-      console.log(loadDoc);
+
       loadDoc.forEach((doc) => {
-        console.log(doc.data());
+        crypto[element].push(doc.data());
       });
+      store.dispatch("cryptos/loadUserCryptos", crypto);
     });
-
-    // const loadDoc = await getDocs(collection(db, "investment"));
-    // loadDoc.forEach((doc) => {
-    //   console.log(doc.data());
-    // });
-
-    //   const loadCol = await getDocs(collection(db, "investment"));
-    //   loadCol.forEach((doc) => {
-    //     console.log(doc.data());
-    //   });
   } catch (error) {
     console.log(error);
   }
@@ -84,5 +82,3 @@ export const addInvestment = async (data) => {
     console.log(error);
   }
 };
-
-loadInvestments();
