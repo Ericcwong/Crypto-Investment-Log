@@ -12,11 +12,13 @@ const mutations = {
     });
   },
   loadUserCrypto(state, payload) {
-    state.userCryptos.push(payload);
+    state.userCryptos = payload;
   },
   clearState(state) {
-    state.userCryptos = [];
     state.cryptos = [];
+  },
+  clearUserCrypto(state) {
+    state.userCryptos = [];
   },
 };
 const actions = {
@@ -40,6 +42,7 @@ const actions = {
   async loadUserCryptos(context, payload) {
     try {
       console.log(payload);
+      context.commit("clearUserCrypto");
       context.commit("loadUserCrypto", payload);
     } catch (error) {
       console.log("Loading user's crypto", error);
@@ -54,6 +57,9 @@ const getters = {
     });
     console.log(data);
     return data;
+  },
+  getState(state) {
+    return state;
   },
 };
 
