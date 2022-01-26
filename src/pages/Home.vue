@@ -1,14 +1,20 @@
 <template>
-  <section id="current-investment" class="investment-body">
+  <section id="current-investment" class="grid grid-cols-2">
     <LoadInvestment />
+
+    <div class="">
+      <h1>Market Data</h1>
+    </div>
   </section>
 </template>
 
 <script setup>
-import WelcomeBanner from "@/components/UI/HomePage/WelcomeBanner.vue";
 import MarketData from "@/components/MarketData/index.vue";
-import { useAuth } from "@/firebase/user";
 import LoadInvestment from "../components/LoadInvestment/index.vue";
 </script>
 
-<style scoped></style>
+<style scoped>
+.header {
+  display: flex;
+}
+</style>
