@@ -41,6 +41,7 @@ const coinData = reactive({
   data: null,
   goal: null,
   transaction: "Buy",
+  icon: props.crypto.image,
 });
 const transactions = ref([{ name: "Buy" }, { name: "Sell" }, { name: "Swap" }]);
 // Both updateData and updateGoal update state whenever the components data changes.
