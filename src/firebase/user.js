@@ -25,7 +25,7 @@ export const useAuth = () => {
   };
   const monitorAuthState = async () => {
     onAuthStateChanged(auth, (data) => {
-      console.log("User status: ", data);
+      // console.log("User status: ", data);
       store.commit("user/getUserData", data);
       loadInvestments();
       user.value = data;
@@ -55,6 +55,7 @@ export const useAuth = () => {
 
   const googleSignOut = () => {
     store.commit("user/clearUser");
+    store.commit("cryptos/clearState");
     signOut(auth).then(() => {
       console.log("User Signed out");
     });
