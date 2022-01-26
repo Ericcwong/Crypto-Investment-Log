@@ -1,8 +1,24 @@
 <template>
-  <div class="grid gap-8">
-    <div class="" v-for="(cryptos, index) in state.userCrypto" :key="index">
-      <div class="" v-for="(crypto, name) in cryptos" :key="name">
-        <div class="capitalize">{{ name }}</div>
+  <div class="">
+    <h2>Your investments</h2>
+    <div class="">
+      <div class="grid gap-4">
+        <div :class="crypto.collection" v-for="crypto in state.userCryptos">
+          <div class="header flex items-center justify-between">
+            <div class="flex items-center">
+              <img
+                class="w-12"
+                :src="crypto.icon"
+                :alt="`${crypto.collection} icon`"
+              />
+              <h4 class="capitalize">{{ crypto.collection }}</h4>
+            </div>
+
+            <div class="">
+              <p>Current Price: {{ crypto.currentPrice }}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -12,26 +28,26 @@
 import { useStore } from "vuex";
 import { reactive, onMounted, computed } from "vue";
 import { loadInvestments } from "@/firebase/database.js";
-onMounted(() => {
-  loadInvestments();
-});
+import axios from "axios";
 const store = useStore();
 
-console.log(store.state);
 const state = reactive({
-  userCrypto: store.state.cryptos.userCryptos,
+  userCryptos: store.state.cryptos.userCryptos,
 });
 
-const filterData = async () => {
-  let name = investment.cryptoName;
-  investment.crypto = null;
-  let getCrypto = await store.getters["cryptos/getCryptoByName"](name);
-  // Clear Matches after search
-  if (name === "") {
-    investment.matches = [];
-  } else {
-    console.log(getCrypto);
-    investment.matches = getCrypto;
-  }
+// Gets current market price
+const getCryptoPrice = () => {
+  state.userCryptos.forEach(async (crypto) => {
+    const name = crypto.collection;
+    let price = await axios.get(
+      `https://api.coingecko.com/api/v3/simple/price?ids=${name}&vs_currencies=usd`
+    );
+    crypto.currentPrice = price.data[name].usd;
+  });
 };
+// Group duplicate documents together
+
+onMounted(() => {
+  getCryptoPrice();
+});
 </script>
