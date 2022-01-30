@@ -55,25 +55,32 @@ export const addInvestment = async (data) => {
     const cryptoName = data.collection;
 
     // Create a document in investment collection. Data read would be using userID that is saved into the document.
-    const docRef = await collection(db, "investment");
-    await setDoc(doc(docRef), {
+    // const docRef = collection(db, "investment");
+    const docRef = await setDoc(collection(db, "investment"), {
       userID: userID,
-      ...data,
+      arrayUnion(...data)
     });
+
+    console.log("Document id: ", docRef.id);
+    addNewUser(docRef.id);
     // Save crypto's name to user's account. Later organizing data in the client.
-    addNewUser();
 
     console.log("Document created: ", docRef);
   } catch (error) {
     console.log("Add Investment: ", error);
   }
 };
-const addNewUser = async () => {
+const addNewUser = async (data) => {
   const userID = await store.state.user.user.uid;
 
   const username = await store.state.user.user.displayName;
   const userRef = doc(db, "user", userID);
-  await setDoc(userRef, {
-    username: username,
-  });
+  await setDoc(
+    userRef,
+    {
+      username: username,
+      cryptos: arrayUnion(data),
+    },
+    { merge: true }
+  );
 };
