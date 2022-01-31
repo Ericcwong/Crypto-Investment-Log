@@ -4,20 +4,22 @@
     <div class="">
       <div class="grid gap-4">
         <div :class="crypto.collection" v-for="crypto in state.userCryptos">
-          <div class="header flex items-center justify-between">
-            <div class="flex items-center">
-              <img
-                class="w-12"
-                :src="crypto.icon"
-                :alt="`${crypto.collection} icon`"
-              />
-              <h4 class="capitalize">{{ crypto.collection }}</h4>
-            </div>
+          <router-link :to="`/user/${crypto.collection}`">
+            <div class="header flex items-center justify-between">
+              <div class="flex items-center">
+                <img
+                  class="w-12"
+                  :src="crypto.icon"
+                  :alt="`${crypto.collection} icon`"
+                />
+                <h4 class="capitalize">{{ crypto.collection }}</h4>
+              </div>
 
-            <div class="">
-              <p>Current Price: {{ crypto.currentPrice }}</p>
+              <div class="">
+                <p>Current Price: {{ crypto.currentPrice }}</p>
+              </div>
             </div>
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
