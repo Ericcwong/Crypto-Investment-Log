@@ -34,18 +34,26 @@
 </template>
 
 <script setup>
-import { reactive, onMounted } from "vue";
+import { reactive, onMounted, toRefs, watch } from "vue";
 const props = defineProps({
   price: Number,
   transaction: String,
 });
+// Watches for prop changes. Props are reactive but this component does not see it without watch.
+watch(
+  () => props.transaction,
+  (first, second) => {
+    // console.log("Watching props.transaction ", first, second);
+    data.transaction_type = first;
+  }
+);
 const emit = defineEmits(["change"]);
 const data = reactive({
   date: null,
   price: props.price,
   quantity: 1,
   total: null,
-  transaction: props.transaction,
+  transaction_type: props.transaction,
 });
 
 // Calculates the total when the component loads in. Or else it would just be blank.
