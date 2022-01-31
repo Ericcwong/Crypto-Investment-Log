@@ -13,7 +13,9 @@ const mutations = {
     });
   },
   loadUserCrypto(state, payload) {
-    state.userCryptos = payload;
+    payload.forEach((element) => {
+      state.userCryptos.push(element);
+    });
   },
   loadUserCryptosID(state, payload) {
     state.userCryptosID = payload;
@@ -64,6 +66,13 @@ const getters = {
   },
   getState(state) {
     return state;
+  },
+  getCrypto: (state) => async (name) => {
+    let data = state.userCryptos.filter((crypto) => {
+      crypto.collection = name;
+    });
+    console.log(data);
+    return data;
   },
 };
 
