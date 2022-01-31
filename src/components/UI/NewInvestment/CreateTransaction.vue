@@ -38,15 +38,14 @@ const props = defineProps({
 const data = props.crypto;
 const coinData = reactive({
   collection: props.crypto.id,
-  data: null,
+  transaction_data: [],
   goal: null,
-  transaction: "Buy",
   icon: props.crypto.image,
 });
 const transactions = ref([{ name: "Buy" }, { name: "Sell" }, { name: "Swap" }]);
 // Both updateData and updateGoal update state whenever the components data changes.
 const updateData = (event) => {
-  coinData.data = event;
+  coinData.transaction_data.push(event);
 };
 const updateGoal = (event) => {
   coinData.goal = event;

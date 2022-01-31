@@ -3,6 +3,7 @@ import axios from "axios";
 const state = () => ({
   cryptos: [],
   userCryptos: [],
+  userCryptosID: [],
 });
 const mutations = {
   loadCryptos(state, payload) {
@@ -13,6 +14,9 @@ const mutations = {
   },
   loadUserCrypto(state, payload) {
     state.userCryptos = payload;
+  },
+  loadUserCryptosID(state, payload) {
+    state.userCryptosID = payload;
   },
   clearState(state) {
     state.cryptos = [];

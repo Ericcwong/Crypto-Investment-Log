@@ -45,6 +45,7 @@ const data = reactive({
   price: props.price,
   quantity: 1,
   total: null,
+  transaction: props.transaction,
 });
 
 // Calculates the total when the component loads in. Or else it would just be blank.
