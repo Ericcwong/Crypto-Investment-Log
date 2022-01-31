@@ -2,7 +2,7 @@ import axios from "axios";
 
 const state = () => ({
   cryptos: [],
-  userCryptos: [],
+  userCryptos: null,
   userCryptosID: [],
 });
 const mutations = {
