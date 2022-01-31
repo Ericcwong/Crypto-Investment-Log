@@ -18,7 +18,7 @@
     </div>
     <TransactionForm
       :price="crypto.current_price"
-      :transaction="coinData.transaction"
+      :transaction="transactionType.trans"
       @change="updateData"
     />
     <Goal @change="updateGoal" :data="data" />
@@ -38,22 +38,22 @@ const props = defineProps({
 const data = props.crypto;
 const coinData = reactive({
   collection: props.crypto.id,
-  transaction_data: [],
+  transaction_data: null,
   goal: null,
   icon: props.crypto.image,
 });
+const transactionType = reactive({ trans: "Buy" });
 const transactions = ref([{ name: "Buy" }, { name: "Sell" }, { name: "Swap" }]);
 // Both updateData and updateGoal update state whenever the components data changes.
 const updateData = (event) => {
-  coinData.transaction_data.push(event);
+  coinData.transaction_data = event;
 };
 const updateGoal = (event) => {
   coinData.goal = event;
 };
 // Checks what kind of transaction was taken place. Exp: Buy, Sell, Transfer
 const transaction = (data) => {
-  console.log(data);
-  coinData.transaction = data;
+  transactionType.trans = data;
 };
 // addInvestment comes from firebase file
 const createInvestment = () => {
