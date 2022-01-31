@@ -26,11 +26,20 @@
 
 <script setup>
 import { useStore } from "vuex";
-import { reactive, onMounted, computed } from "vue";
+import { reactive, onMounted, computed, watch } from "vue";
 import { loadInvestments } from "@/firebase/database.js";
 import axios from "axios";
 const store = useStore();
-
+// watch(()=> store.state.cryptos.userCryptos,)
+// Watches for prop changes. Props are reactive but this component does not see it without watch.
+watch(
+  () => store.state.cryptos.userCryptos,
+  (first, second) => {
+    // console.log("Watching props.transaction ", first, second);
+    state.userCryptos = first;
+    getCryptoPrice();
+  }
+);
 const state = reactive({
   userCryptos: store.state.cryptos.userCryptos,
 });
