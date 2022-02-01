@@ -54,8 +54,10 @@ export const useAuth = () => {
   };
 
   const googleSignOut = () => {
+    // Clear store states
     store.commit("user/clearUser");
     store.commit("cryptos/clearState");
+    store.commit("cryptos/clearUserCrypto");
     signOut(auth).then(() => {
       console.log("User Signed out");
     });
