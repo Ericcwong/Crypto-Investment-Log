@@ -32,7 +32,6 @@ import { reactive, onMounted, computed, watch } from "vue";
 import { loadInvestments } from "@/firebase/database.js";
 import axios from "axios";
 const store = useStore();
-// watch(()=> store.state.cryptos.userCryptos,)
 // Watches for prop changes. Props are reactive but this component does not see it without watch.
 watch(
   () => store.state.cryptos.userCryptos,
@@ -48,6 +47,7 @@ const state = reactive({
 
 // Gets current market price
 const getCryptoPrice = () => {
+  // console.log(store.state.cryptos.userCryptos);
   state.userCryptos.forEach(async (crypto) => {
     const name = crypto.collection;
     let price = await axios.get(
