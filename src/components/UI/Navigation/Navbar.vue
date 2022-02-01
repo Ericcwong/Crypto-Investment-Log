@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-gray-600 flex flex-col items-center">
+  <nav class="bg-nav-bg flex flex-col items-center">
     <router-link to="/"><div class="text-xl">Investment Log</div></router-link>
     <div class="flex user justify-center items-center flex-auto">
       <!-- Sign in -->
