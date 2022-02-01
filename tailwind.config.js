@@ -5,7 +5,9 @@ module.exports = {
     extend: {
       colors: {
         // Background blur for modal
-        "background-blur": "rgba(10, 30, 66, 0.4)",
+        "nav-bg": "#96ACBB",
+        "assets-bg": "#A5BDCE",
+        "main-bg": "#8AA1B1",
       },
     },
   },
