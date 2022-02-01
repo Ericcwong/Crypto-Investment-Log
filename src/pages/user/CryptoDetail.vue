@@ -21,23 +21,23 @@ const state = reactive({
   data: null,
 });
 onMounted(() => {
+  state.name = "";
+  state.data = null;
   const route = useRoute();
-  console.log(route.params);
   state.name = route.params.id;
   getCrypto();
 });
 watch(
   () => store.state.cryptos.userCryptos,
   (first, second) => {
+    // console.log("First", second);
     state.userCryptos = first;
     getCrypto();
   }
 );
 const getCrypto = async () => {
   const storeState = await store.state.cryptos.userCryptos;
-  console.log(storeState);
-  let data = storeState.find((crypto) => (crypto.collection = state.name));
-  console.log(data);
+  let data = storeState.find((crypto) => crypto.collection === state.name);
   state.data = { ...data };
 };
 </script>
