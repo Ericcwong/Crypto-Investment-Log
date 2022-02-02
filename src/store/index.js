@@ -9,7 +9,7 @@ const store = createStore({
     cryptos,
     user,
   },
-  plugins: [createPersistedState()],
+  plugins: [createPersistedState(), createLogger()],
 });
 
 export default store;

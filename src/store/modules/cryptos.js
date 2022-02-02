@@ -2,17 +2,17 @@ import axios from "axios";
 
 const state = () => ({
   cryptos: [],
-  userCryptos: null,
+  userCryptos: [],
   userCryptosID: [],
 });
 const mutations = {
   loadCryptos(state, payload) {
-    // console.log(payload);
     payload.forEach((element) => {
       state.cryptos.push(element);
     });
   },
   loadUserCrypto(state, payload) {
+    console.log(payload);
     payload.forEach((element) => {
       state.userCryptos.push(element);
     });
@@ -45,14 +45,39 @@ const actions = {
       console.log(error);
     }
   },
-  async loadUserCryptos(context, payload) {
+  async loadUserCryptos({ commit, dispatch }, payload) {
     try {
-      console.log(payload);
-      context.commit("clearUserCrypto");
-      context.commit("loadUserCrypto", payload);
+      let data = await dispatch("calculateUserCrypto", payload);
+      console.log(data);
+      commit("clearUserCrypto");
+      commit("loadUserCrypto", data); // Need to pass calculated total afterwards
     } catch (error) {
       console.log("Loading user's crypto", error);
     }
+  },
+  async calculateUserCrypto({ dispatch }, payload) {
+    payload.forEach(async (doc) => {
+      let totalPrice = doc.data.reduce((previous, current) => {
+        return previous + current.price * current.quantity;
+      }, 0);
+      let totalQuantity = doc.data.reduce((previous, current) => {
+        return previous + current.quantity;
+      }, 0);
+      let price = await axios.get(
+        `https://api.coingecko.com/api/v3/simple/price?ids=${doc.collection}&vs_currencies=usd`
+      );
+      let currentPrice = price.data[doc.collection].usd;
+
+      doc.data.push({ total_price: totalPrice });
+      // // Creates a new property within data array!
+      // doc.data.currentPrice = currentPrice;
+      // doc.data.totalPrice = totalPrice;
+      // doc.data.totalQuantity = totalQuantity;
+      // doc.data.averagePrice = (totalPrice / totalQuantity).toFixed(2);
+      // doc.data.profit_loss = currentPrice * totalQuantity - totalPrice;
+      console.log(doc);
+    });
+    return payload;
   },
 };
 const getters = {
@@ -65,7 +90,7 @@ const getters = {
     return data;
   },
   getState(state) {
-    return state;
+    return state.userCryptos;
   },
   getCrypto: (state) => async (name) => {
     let data = state.userCryptos.filter((crypto) => {
