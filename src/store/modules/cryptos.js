@@ -17,6 +17,11 @@ const mutations = {
       state.userCryptos.push(element);
     });
   },
+  updateUserCrypto(state, payload) {
+    payload.forEach((element) => {
+      state.userCryptos.push(element);
+    });
+  },
   loadUserCryptosID(state, payload) {
     state.userCryptosID = payload;
   },
@@ -47,37 +52,43 @@ const actions = {
   },
   async loadUserCryptos({ commit, dispatch }, payload) {
     try {
-      let data = await dispatch("calculateUserCrypto", payload);
-      console.log(data);
       commit("clearUserCrypto");
+      const data = await dispatch("calculateUserCrypto", payload);
       commit("loadUserCrypto", data); // Need to pass calculated total afterwards
     } catch (error) {
       console.log("Loading user's crypto", error);
     }
   },
-  async calculateUserCrypto({ dispatch }, payload) {
-    payload.forEach(async (doc) => {
-      let totalPrice = doc.data.reduce((previous, current) => {
-        return previous + current.price * current.quantity;
-      }, 0);
-      let totalQuantity = doc.data.reduce((previous, current) => {
-        return previous + current.quantity;
-      }, 0);
-      let price = await axios.get(
-        `https://api.coingecko.com/api/v3/simple/price?ids=${doc.collection}&vs_currencies=usd`
-      );
-      let currentPrice = price.data[doc.collection].usd;
+  async calculateUserCrypto({ dispatch, commit }, payload) {
+    console.log(payload);
+    const calculatedPayload = Promise.all(
+      payload.map(async (doc) => {
+        console.log(doc);
+        let totalPrice = doc.data.reduce((previous, current) => {
+          return previous + current.price * current.quantity;
+        }, 0);
+        let totalQuantity = doc.data.reduce((previous, current) => {
+          return previous + current.quantity;
+        }, 0);
+        let price = await axios.get(
+          `https://api.coingecko.com/api/v3/simple/price?ids=${doc.collection}&vs_currencies=usd`
+        );
+        let currentPrice = price.data[doc.collection].usd;
 
-      doc.data.push({ total_price: totalPrice });
-      // // Creates a new property within data array!
-      // doc.data.currentPrice = currentPrice;
-      // doc.data.totalPrice = totalPrice;
-      // doc.data.totalQuantity = totalQuantity;
-      // doc.data.averagePrice = (totalPrice / totalQuantity).toFixed(2);
-      // doc.data.profit_loss = currentPrice * totalQuantity - totalPrice;
-      console.log(doc);
-    });
-    return payload;
+        // // Creates a new property within data array!
+        doc.current_price = currentPrice;
+        doc.total_price = totalPrice;
+        doc.total_quantity = totalQuantity;
+        doc.average_price = (totalPrice / totalQuantity).toFixed(2);
+        doc.profit_loss = (currentPrice * totalQuantity - totalPrice).toFixed(
+          2
+        );
+        // console.log(doc);
+        return doc;
+      })
+    );
+    console.log(calculatedPayload);
+    return calculatedPayload;
   },
 };
 const getters = {
