@@ -65,10 +65,25 @@ const actions = {
       payload.map(async (doc) => {
         console.log(doc);
         let totalPrice = doc.data.reduce((previous, current) => {
-          return previous + current.price * current.quantity;
+          // console.log(previous);
+          console.log(current);
+          if (current.transaction_type === "Buy") {
+            console.log("Buy");
+            return previous + current.price * current.quantity;
+          } else {
+            console.log("Sell");
+            return previous - current.price * current.quantity;
+          }
         }, 0);
         let totalQuantity = doc.data.reduce((previous, current) => {
-          return previous + current.quantity;
+          if (current.transaction_type === "Buy") {
+            console.log("Buy");
+            return previous + current.quantity;
+          } else {
+            console.log("Sell");
+            return previous - current.quantity;
+          }
+          // return previous + current.quantity;
         }, 0);
         let price = await axios.get(
           `https://api.coingecko.com/api/v3/simple/price?ids=${doc.collection}&vs_currencies=usd`
@@ -79,7 +94,9 @@ const actions = {
         doc.current_price = currentPrice;
         doc.total_price = totalPrice;
         doc.total_quantity = totalQuantity;
-        doc.average_price = (totalPrice / totalQuantity).toFixed(2);
+        if (totalQuantity > 0) {
+          doc.average_price = (totalPrice / totalQuantity).toFixed(2);
+        }
         doc.profit_loss = (currentPrice * totalQuantity - totalPrice).toFixed(
           2
         );
