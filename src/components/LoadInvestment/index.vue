@@ -6,7 +6,7 @@
         <Table />
       </div>
     </div>
-    <!-- <div class="basis-1/2">Pie chart/graph area</div> -->
+    <div class="basis-1/2">Pie chart/graph area</div>
   </div>
 </template>
 
