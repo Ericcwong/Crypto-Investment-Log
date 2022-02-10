@@ -7,7 +7,7 @@
       <Swap />
     </div>
 
-    <div class="col-span-2 row-span-2 bg-assets-bg"><LoadInvestment /></div>
+    <div class="col-span-2 row-span-2 bg-nav-bg"><LoadInvestment /></div>
   </section>
 </template>
 
