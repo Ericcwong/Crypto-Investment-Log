@@ -5,13 +5,11 @@ import {
   query,
   where,
   addDoc,
-  getDocs,
   setDoc,
   arrayUnion,
   doc,
-  updateDoc,
   onSnapshot,
-  QuerySnapshot,
+  deleteDoc,
 } from "firebase/firestore";
 // User needs to have an account to start saving data to their UID
 import store from "@/store/index.js";
@@ -80,6 +78,7 @@ export const addInvestment = async (data) => {
       const docRef = await addDoc(collection(db, "investment"), {
         userID: userID,
         collection: data.collection,
+        symbol: data.symbol,
         data: arrayUnion(data.transaction_data),
         goal: data.goal,
         icon: data.icon,
@@ -103,4 +102,7 @@ const addNewUser = async (data) => {
     },
     { merge: true }
   );
+};
+export const deleteInvestment = async (documentID) => {
+  await deleteDoc(doc(db, "investment", documentID));
 };
