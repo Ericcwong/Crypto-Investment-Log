@@ -12,7 +12,6 @@ const mutations = {
     });
   },
   loadUserCrypto(state, payload) {
-    console.log(payload);
     payload.forEach((element) => {
       state.userCryptos.push(element);
     });
@@ -60,27 +59,19 @@ const actions = {
     }
   },
   async calculateUserCrypto({ dispatch, commit }, payload) {
-    console.log(payload);
     const calculatedPayload = Promise.all(
       payload.map(async (doc) => {
-        console.log(doc);
         let totalPrice = doc.data.reduce((previous, current) => {
-          // console.log(previous);
-          console.log(current);
           if (current.transaction_type === "Buy") {
-            console.log("Buy");
             return previous + current.price * current.quantity;
           } else {
-            console.log("Sell");
             return previous - current.price * current.quantity;
           }
         }, 0);
         let totalQuantity = doc.data.reduce((previous, current) => {
           if (current.transaction_type === "Buy") {
-            console.log("Buy");
             return previous + current.quantity;
           } else {
-            console.log("Sell");
             return previous - current.quantity;
           }
           // return previous + current.quantity;
@@ -104,7 +95,6 @@ const actions = {
         return doc;
       })
     );
-    console.log(calculatedPayload);
     return calculatedPayload;
   },
 };
@@ -119,6 +109,19 @@ const getters = {
   },
   getState(state) {
     return state.userCryptos;
+  },
+  // Filter array of duplicates and returns only one of each crypto
+  getUserCrypto(state) {
+    console.log(state.userCryptos);
+    let data = state.userCryptos.sort((a, b) => {
+      return b.total_price - a.total_price;
+    });
+    // console.log(data);
+    // state.userCryptos.forEach((e) => {
+    // console.log(`Name: ${e.collection} Price ${e.total_price}`);
+    // });
+    return data;
+    // const filteredState = new Set(state.userCryptos);
   },
   getCrypto: (state) => async (name) => {
     let data = state.userCryptos.filter((crypto) => {
