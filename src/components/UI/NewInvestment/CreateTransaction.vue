@@ -38,6 +38,7 @@ const props = defineProps({
 const data = props.crypto;
 const coinData = reactive({
   collection: props.crypto.id,
+  symbol: props.crypto.symbol,
   transaction_data: null,
   goal: null,
   icon: props.crypto.image,
