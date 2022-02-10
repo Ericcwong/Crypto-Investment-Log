@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid-cols-7 h-screen">
-    <Navbar class="col-span-1" />
+    <Navbar class="col-span-1 border-r-4 border-gray-500" />
     <div class="col-span-6">
       <router-view />
     </div>
