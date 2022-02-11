@@ -5,4 +5,10 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 ## Recommended IDE Setup
 
 - [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+
 # Crypto-Investment-Log
+
+# Application Structure
+
+Firebase database
+Read more information [here](./src/firebase/README.md)
