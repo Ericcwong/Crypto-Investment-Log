@@ -1,3 +1,7 @@
+<!-- 
+  Displays user's available assets to swap.
+ -->
+
 <template>
   <div class="text-black">
     <div
@@ -26,7 +30,6 @@ import { computed } from "vue";
 const store = useStore();
 
 let userCryptos = computed(() => store.getters["cryptos/getUserCrypto"]);
-// console.log(userCryptos);
 </script>
 
 <style scoped></style>

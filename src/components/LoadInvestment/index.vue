@@ -1,3 +1,4 @@
+<!-- Displays user's crypto data -->
 <template>
   <div class="flex">
     <div class="basis-1/2">

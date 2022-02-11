@@ -1,3 +1,7 @@
+<!-- 
+-- Swap between different assets
+-->
+
 <template>
   <div class="border h-5/6 w-1/3 bg-slate-600 rounded-lg text-white">
     <h2>Swap Assets</h2>
@@ -60,6 +64,10 @@
 </template>
 
 <script setup>
+/**
+ * Swap displays the highest fiat priced investment followed by the second
+ * Modal opens when user chooses to change assets.
+ **/
 import { ref } from "vue";
 import Modal from "@/components/UI/Modal/index.vue";
 import Button from "@/components/UI/Button.vue";
@@ -68,7 +76,6 @@ import { useStore } from "vuex";
 
 const store = useStore();
 const userCrypto = store.getters["cryptos/getUserCrypto"];
-console.log(userCrypto[1]);
 const modalActive = ref(false);
 const toggleModal = () => {
   modalActive.value = !modalActive.value;

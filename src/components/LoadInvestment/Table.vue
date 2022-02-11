@@ -1,3 +1,6 @@
+<!-- 
+ --- A table to display user's investments.
+ -->
 <template>
   <table class="table-auto">
     <thead>
@@ -36,17 +39,16 @@
 </template>
 
 <script setup>
+/*
+ * Pulls user crypto data from store/cryptos/getState and displays it to the DOM.
+ * Route user to pages/user/CryptoDetail once clicked on the specific crypto.
+ */
 import { useStore } from "vuex";
-import { reactive, onMounted, computed, watch, ref } from "vue";
-import { loadInvestments } from "@/firebase/database.js";
-import axios from "axios";
+import { computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 const store = useStore();
 const router = useRouter();
-const route = useRoute();
-// Watches for prop changes. Props are reactive but this component does not see it without watch.
 
-// const userCryptos = ref(store.getters["cryptos/getState"]);
 const userCryptos = computed(() => store.getters["cryptos/getState"]);
 
 const routeTo = (name) => {
@@ -54,5 +56,4 @@ const routeTo = (name) => {
     path: `/user/${name}`,
   });
 };
-// console.log(store.state.cryptos.userCryptos);
 </script>
