@@ -15,7 +15,7 @@
 <script setup>
 import { ref } from "vue";
 import Modal from "@/components/UI/Modal/index.vue";
-import NewInvestment from "./NewInvestment.vue";
+import NewInvestment from "@/components/NewInvestment/NewInvestment.vue";
 import Button from "@/components/UI/Button.vue";
 const modalActive = ref(false);
 const toggleModal = () => {
