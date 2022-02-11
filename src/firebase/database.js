@@ -103,6 +103,7 @@ const addNewUser = async (data) => {
     { merge: true }
   );
 };
+// Deletes the WHOLE document in user's investment
 export const deleteInvestment = async (documentID) => {
   await deleteDoc(doc(db, "investment", documentID));
 };
