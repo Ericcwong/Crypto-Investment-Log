@@ -10,6 +10,7 @@
       v-model="investment.cryptoName"
       @input="filterData"
       class="w-full outline-none pl-6 relative"
+      v-focus
     />
   </form>
   <SearchResults
@@ -24,8 +25,8 @@
 </template>
 
 <script setup>
-import SearchResults from "@/components/UI/NewInvestment/SearchResults.vue";
-import CreateTransaction from "@/components/UI/NewInvestment/CreateTransaction.vue";
+import SearchResults from "@/components/NewInvestment/SearchResults.vue";
+import CreateTransaction from "@/components/NewInvestment/CreateTransaction.vue";
 import { onMounted, reactive, computed } from "vue";
 import { useStore } from "vuex";
 import { mapGetters } from "vuex";
