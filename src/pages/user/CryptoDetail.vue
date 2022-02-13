@@ -9,6 +9,7 @@
 
     <div class="" v-for="(transaction, index) in state.data.data" :key="index">
       {{ transaction }}
+      <button @click="deleteData(index)">{{ index }}</button>
     </div>
   </div>
   <!-- {{ state.data }} -->
@@ -18,7 +19,7 @@
 import { useRoute, useRouter } from "vue-router";
 import { reactive, onMounted, watch } from "vue";
 import { useStore } from "vuex";
-import { deleteInvestment } from "@/firebase/database.js";
+import { deleteInvestment, deleteTransaction } from "@/firebase/database.js";
 
 const router = useRouter();
 // const route = useRoute();
@@ -30,8 +31,8 @@ const state = reactive({
   data: null,
 });
 onMounted(() => {
-  state.name = "";
-  state.data = null;
+  // state.name = "";
+  // state.data = null;
   const route = useRoute();
   state.name = route.params.id;
   getCrypto();
@@ -39,14 +40,16 @@ onMounted(() => {
 watch(
   () => store.state.cryptos.userCryptos,
   (first, second) => {
-    // console.log("First", second);
-    state.userCryptos = first;
+    console.log("First", first);
+
+    // console.log(data);
+    // state.data = data;
     getCrypto();
   }
 );
 const getCrypto = async () => {
-  const storeState = await store.state.cryptos.userCryptos;
-  const docIDS = await store.state.cryptos.userCryptosID;
+  const storeState = store.state.cryptos.userCryptos;
+  const docIDS = store.state.cryptos.userCryptosID;
   let data = storeState.find((crypto) => crypto.collection === state.name);
   let findDocID = docIDS.find((id) => id.collection === state.name);
   console.log(findDocID);
@@ -65,6 +68,12 @@ const deleteDocument = () => {
       path: "/",
     });
   }
+};
+const deleteData = async (data) => {
+  const storeState = await store.state.cryptos.userCryptos;
+  let crypto = storeState.find((crypto) => crypto.collection === state.name);
+  crypto.data.splice(data, 1);
+  deleteTransaction(state.docID, crypto.data);
 };
 </script>
 
