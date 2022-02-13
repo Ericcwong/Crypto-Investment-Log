@@ -9,14 +9,15 @@
     <!-- Modal body -->
     <div
       v-show="modalActive"
-      class="flex justify-center items-center h-screen w-screen fixed top-0 left-0 bg-gray-500"
+      class="flex justify-center items-center h-screen w-screen fixed top-0 left-0"
+      @click.self="close"
     >
       <!-- Modal container -->
       <transition name="modal-animation-inner" v-show="modalActive">
         <!-- Modal Content -->
         <div
           v-show="modalActive"
-          class="relative max-w-screen-sm h-4/6 w-5/6 bg-white p-16"
+          class="relative max-w-screen-sm h-4/6 w-5/6 bg-slate-400 p-16"
         >
           <font-awesome-icon
             @click="close"
