@@ -3,7 +3,7 @@
     <div class="" v-for="match in matches" :key="match.id">
       <div
         @click="getMatch(match)"
-        class="flex items-center hover:cursor-pointer mt-4 mb-4"
+        class="flex items-center hover:cursor-pointer hover:bg-slate-300 mt-4 mb-4"
       >
         <img class="w-12 mr-4" :src="match.image" alt="" />
         <p>{{ match.name }}</p>
