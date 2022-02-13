@@ -10,6 +10,7 @@ import {
   doc,
   onSnapshot,
   deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 // User needs to have an account to start saving data to their UID
 import store from "@/store/index.js";
@@ -106,4 +107,11 @@ const addNewUser = async (data) => {
 // Deletes the WHOLE document in user's investment
 export const deleteInvestment = async (documentID) => {
   await deleteDoc(doc(db, "investment", documentID));
+};
+export const deleteTransaction = async (documentID, data) => {
+  const documentRef = doc(db, "investment", documentID);
+  console.log(data);
+  await updateDoc(documentRef, {
+    data: data,
+  });
 };
