@@ -9,7 +9,7 @@
     <!-- Modal body -->
     <div
       v-show="modalActive"
-      class="flex justify-center items-center h-screen w-screen fixed top-0 left-0"
+      class="flex justify-center items-center h-screen w-screen fixed top-0 left-0 drop-shadow-xl"
       @click.self="close"
     >
       <!-- Modal container -->
@@ -17,7 +17,7 @@
         <!-- Modal Content -->
         <div
           v-show="modalActive"
-          class="relative max-w-screen-sm h-4/6 w-5/6 bg-slate-400 p-16"
+          class="relative max-w-screen-sm h-4/6 w-5/6 bg-slate-400 p-16 rounded"
         >
           <font-awesome-icon
             @click="close"
