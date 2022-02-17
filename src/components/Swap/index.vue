@@ -4,8 +4,8 @@
 
 <template>
   <div class="border h-5/6 w-1/3 bg-slate-600 rounded-lg text-white">
-    <h2>Swap Assets</h2>
     <div class="grid gap-12 p-5">
+      <h2>Swap Assets</h2>
       <!-- From input -->
       <div class="input-container">
         <label for="asset-1 text-2xl ">From</label>
