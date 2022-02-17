@@ -9,12 +9,23 @@ import {
   faTimesCircle,
   faPlus,
   faCaretDown,
+  faUserCircle,
+  faArrowAltCircleRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import "./style.css";
 
-library.add(faSearch, faTimes, faTimesCircle, faGoogle, faPlus, faCaretDown);
+library.add(
+  faSearch,
+  faTimes,
+  faTimesCircle,
+  faGoogle,
+  faPlus,
+  faCaretDown,
+  faUserCircle,
+  faArrowAltCircleRight
+);
 
 createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon)
