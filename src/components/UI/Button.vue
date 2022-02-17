@@ -1,5 +1,5 @@
 <template>
-  <button class="text-white rounded bg-gray-500 px-3" @click="runFunction">
+  <button class="text-white rounded bg-gray-500 p-2" @click="runFunction">
     <font-awesome-icon
       v-if="Icon !== undefined"
       :icon="Icon"
