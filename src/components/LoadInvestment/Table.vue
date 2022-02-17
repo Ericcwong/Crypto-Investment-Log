@@ -6,6 +6,7 @@
     <thead>
       <tr>
         <th>Coin</th>
+        <th>Holdings</th>
         <th>Average Price</th>
         <th>Quantity</th>
         <th>Current Price</th>
@@ -29,6 +30,7 @@
             <span class="capitalize">{{ crypto.collection }}</span>
           </div>
         </td>
+        <td class="text-center">${{ crypto.total_price }}</td>
         <td class="text-center">${{ crypto.average_price }}</td>
         <td class="text-center">{{ crypto.total_quantity }}</td>
         <td class="text-center">${{ crypto.current_price }}</td>
