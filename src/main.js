@@ -11,6 +11,7 @@ import {
   faCaretDown,
   faUserCircle,
   faArrowAltCircleRight,
+  faRocket,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -24,7 +25,8 @@ library.add(
   faPlus,
   faCaretDown,
   faUserCircle,
-  faArrowAltCircleRight
+  faArrowAltCircleRight,
+  faRocket
 );
 
 createApp(App)
