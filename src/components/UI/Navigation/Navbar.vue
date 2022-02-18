@@ -1,7 +1,10 @@
 <template>
-  <nav class="bg-nav-bg">
+  <nav class="bg-nav-bg p-4">
     <router-link to="/">
-      <div class="text-xl text-center mt-10 mb-10">Investment Log</div>
+      <div class="flex items-center text-2xl text-center mt-10 mb-10">
+        <img src="./rocket.svg" class="w-1/3" alt="" />
+        <h4>Moon Rocket</h4>
+      </div>
     </router-link>
     <!-- Navigation buttons -->
     <div class="grid grid-rows-6 gap-8 h-3/4">
@@ -14,6 +17,12 @@
       ></Button>
       <!-- Logged in buttons -->
       <Button v-if="isLogin" name="My Account" Icon="user-circle"></Button>
+      <Button
+        v-if="isLogin"
+        name="Portfolio"
+        Icon="rocket"
+        @runFunction="routeTo"
+      ></Button>
       <Button
         v-if="isLogin"
         @runFunction="toggleModal"
@@ -34,20 +43,31 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useAuth } from "@/firebase/user.js";
 import SignInModal from "./Auth/SignIn.vue";
 import Register from "./Auth/Register.vue";
 import Button from "@/components/UI/Button.vue";
 import NewInvestment from "@/components/NewInvestment/NewInvestment.vue";
 import Modal from "@/components/UI/Modal/index.vue";
-
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+const store = useStore();
+const router = useRouter();
 const modalActive = ref(false);
 const toggleModal = () => {
   modalActive.value = !modalActive.value;
 };
-
 const { user, isLogin, googleSignIn, googleSignOut } = useAuth();
+let userUID = computed(() => {
+  return store.state.user.user.uid;
+});
+console.log(userUID.value);
+const routeTo = () => {
+  router.push({
+    path: `/portfolio/${userUID.value}`,
+  });
+};
 </script>
 
 <style scoped></style>
