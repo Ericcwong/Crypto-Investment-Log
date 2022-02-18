@@ -17,8 +17,4 @@ import LoadInvestment from "../components/LoadInvestment/index.vue";
 import Swap from "@/components/Swap/index.vue";
 </script>
 
-<style scoped>
-.header {
-  display: flex;
-}
-</style>
+<style scoped></style>
