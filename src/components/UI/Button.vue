@@ -1,10 +1,13 @@
 <template>
   <button class="text-white rounded bg-gray-500 p-2" @click="runFunction">
-    <font-awesome-icon
-      v-if="Icon !== undefined"
-      :icon="Icon"
-    ></font-awesome-icon>
-    {{ name }}
+    <div class="flex justify-center items-center gap-1">
+      <font-awesome-icon
+        class="text-xl"
+        v-if="Icon !== undefined"
+        :icon="Icon"
+      ></font-awesome-icon>
+      <h4>{{ name }}</h4>
+    </div>
   </button>
 </template>
 
