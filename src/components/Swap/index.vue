@@ -7,28 +7,11 @@
     <div class="grid gap-12 p-5">
       <h2>Swap Assets</h2>
       <!-- From input -->
-      <div class="input-container">
-        <label for="asset-1 text-2xl ">From</label>
-        <div class="flex border-2 p-4 rounded-lg">
-          <input
-            class="w-full text-3xl bg-slate-600"
-            type=""
-            placeholder="0.00"
-          />
-          <Modal @close="toggleModal" :modalActive="modalActive">
-            <CryptoList
-          /></Modal>
-          <button @click="toggleModal">
-            <div class="flex items-center">
-              <img class="w-7" :src="userCrypto[0].icon" alt="icon" />
-              <div class="flex items-center pl-2 pr-3">
-                <span class="uppercase mr-1">{{ userCrypto[0].symbol }} </span>
-                <font-awesome-icon class="text-sm" icon="caret-down" />
-              </div>
-            </div>
-          </button>
-        </div>
-      </div>
+      <FromInput
+        :userCrypto="userCrypto"
+        :selectedCryptoOne="selectedCryptoOne"
+        @updateCrypto="changeCryptoOne"
+      />
 
       <!-- Switch from, to. -->
       <div class="flex justify-center items-center">
@@ -36,28 +19,12 @@
       </div>
 
       <!-- To input -->
-      <div class="input-container">
-        <label for="asset-2">To</label>
-        <div class="flex border-2 p-4 rounded-lg">
-          <input
-            class="w-full text-3xl bg-slate-600"
-            type=""
-            placeholder="0.00"
-          />
-          <Modal @close="toggleModal" :modalActive="modalActive">
-            <CryptoList />
-          </Modal>
-          <button @click="toggleModal">
-            <div class="flex items-center">
-              <img class="w-7" :src="userCrypto[1].icon" alt="icon" />
-              <div class="flex items-center ml-2 mr-3">
-                <span class="uppercase mr-1">{{ userCrypto[1].symbol }} </span>
-                <font-awesome-icon class="text-sm" icon="caret-down" />
-              </div>
-            </div>
-          </button>
-        </div>
-      </div>
+      <ToInput
+        :userCrypto="userCrypto"
+        :selectedCryptoTwo="selectedCryptoTwo"
+        @updateCrypto="changeCryptoTwo"
+      />
+      <div class="border text-right">{{ swapPrice }}</div>
       <Button name="Swap" />
     </div>
   </div>
@@ -68,17 +35,62 @@
  * Swap displays the highest fiat priced investment followed by the second
  * Modal opens when user chooses to change assets.
  **/
-import { ref } from "vue";
-import Modal from "@/components/UI/Modal/index.vue";
-import Button from "@/components/UI/Button.vue";
-import CryptoList from "./CryptoList.vue";
+import { reactive, ref, onMounted } from "vue";
 import { useStore } from "vuex";
 
+import Button from "@/components/UI/Button.vue";
+import FromInput from "./FromInput.vue";
+import ToInput from "./ToInput.vue";
+const selectedCryptoOne = reactive({
+  index: 0,
+  symbol: null,
+  current_price: null,
+});
+const selectedCryptoTwo = reactive({
+  index: 1,
+  symbol: null,
+  current_price: null,
+});
+const swapPrice = ref(null);
 const store = useStore();
 const userCrypto = store.getters["cryptos/getUserCrypto"];
-const modalActive = ref(false);
-const toggleModal = () => {
-  modalActive.value = !modalActive.value;
+onMounted(() => {
+  updateValue();
+  calculatePrice();
+});
+/* When page loads, gets current price from store getters and puts in reactive data. Cannot call data before reactive was initalized.
+ * Also retrieves the name
+ */
+const updateValue = () => {
+  selectedCryptoOne.current_price = userCrypto[0].current_price;
+  selectedCryptoOne.symbol = userCrypto[0].symbol;
+  selectedCryptoTwo.current_price = userCrypto[1].current_price;
+  selectedCryptoTwo.symbol = userCrypto[1].symbol;
+};
+const calculatePrice = async () => {
+  const priceOne = await selectedCryptoOne.current_price;
+  const priceTwo = await selectedCryptoTwo.current_price;
+  const symbolOne = await selectedCryptoOne.symbol;
+  const symbolTwo = await selectedCryptoTwo.symbol;
+
+  console.log(priceOne, priceTwo);
+  // if (priceOne >= priceTwo) {
+  let swapReturn = priceOne / priceTwo;
+  console.log(swapReturn);
+  swapPrice.value = `One ${symbolOne.toUpperCase()} = ${swapReturn} ${symbolTwo.toUpperCase()}`;
+  // }
+};
+const changeCryptoOne = (data) => {
+  selectedCryptoOne.index = data.index;
+  selectedCryptoOne.current_price = data.current_price;
+  selectedCryptoOne.symbol = data.symbol;
+  calculatePrice();
+};
+const changeCryptoTwo = (data) => {
+  selectedCryptoTwo.index = data.index;
+  selectedCryptoTwo.current_price = data.current_price;
+  selectedCryptoTwo.symbol = data.symbol;
+  calculatePrice();
 };
 </script>
 
