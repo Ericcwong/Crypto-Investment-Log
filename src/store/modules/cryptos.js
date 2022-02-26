@@ -7,6 +7,7 @@ const state = () => ({
 });
 const mutations = {
   loadCryptos(state, payload) {
+    state.cryptos = [];
     payload.forEach((element) => {
       state.cryptos.push(element);
     });
@@ -112,7 +113,7 @@ const getters = {
   },
   // Filter array of duplicates and returns only one of each crypto
   getUserCrypto(state) {
-    console.log(state.userCryptos);
+    // console.log(state.userCryptos);
     let data = state.userCryptos.sort((a, b) => {
       return b.total_price - a.total_price;
     });
