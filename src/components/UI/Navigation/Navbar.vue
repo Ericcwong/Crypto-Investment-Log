@@ -62,7 +62,6 @@ const { user, isLogin, googleSignIn, googleSignOut } = useAuth();
 let userUID = computed(() => {
   return store.state.user.user.uid;
 });
-console.log(userUID.value);
 const routeTo = () => {
   router.push({
     path: `/portfolio/${userUID.value}`,
