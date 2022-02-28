@@ -7,7 +7,7 @@ module.exports = {
         // Background blur for modal
         "nav-bg": "#96ACBB",
         "assets-bg": "#A5BDCE",
-        "main-bg": "#8AA1B1",
+        "main-bg": "#696969	",
       },
     },
   },
