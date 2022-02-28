@@ -14,6 +14,7 @@
             index: index,
             current_price: userCrypto.current_price,
             symbol: userCrypto.symbol,
+            quantity: userCrypto.total_quantity,
           })
         "
       >
