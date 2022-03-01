@@ -10,10 +10,11 @@ import {
 // Store Import
 import store from "@/store/index.js";
 // Vue functions
-import { computed, onUnmounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { loadInvestments } from "./database";
 // Calling auth function from firebase and using the configuration.
 const auth = getAuth(firebaseApp);
+let authFlag = true;
 
 // Listens to any authentication changes, when the user does refresh the page.
 // User's sign in data is still there until they sign out.
@@ -23,23 +24,25 @@ export const useAuth = () => {
     code: null,
     message: null,
   };
-  const monitorAuthState = async () => {
-    onAuthStateChanged(auth, (data) => {
-      // console.log("User status: ", data);
-      store.commit("user/getUserData", data);
-      loadInvestments();
-      user.value = data;
-    });
-  };
-  // const unsubscribe = auth.onAuthStateChanged((userData) => {
-  //   // loadInvestments(userData.uid);
-  //   user.value = userData;
-  // });
-  // onUnmounted(unsubscribe);
   // isLogin helps reactive components check authentication state.
-  const isLogin = computed(() => user.value !== null);
-  const provider = new GoogleAuthProvider();
+  const isLogin = ref(false);
+  onMounted(() => {
+    onAuthStateChanged(auth, (data) => {
+      if (data && authFlag) {
+        authFlag = false;
+        isLogin.value = true;
+        console.log("User Firebase", isLogin.value);
+        store.commit("user/getUserData", data);
+        loadInvestments();
+        user.value = data;
+      } else {
+        isLogin.value = false;
+      }
+    });
+  });
+
   const googleSignIn = () => {
+    const provider = new GoogleAuthProvider();
     try {
       signInWithPopup(auth, provider);
     } catch (error) {
@@ -62,6 +65,6 @@ export const useAuth = () => {
       console.log("User Signed out");
     });
   };
-  monitorAuthState();
+  // monitorAuthState();
   return { user, isLogin, googleSignIn, googleSignOut };
 };
