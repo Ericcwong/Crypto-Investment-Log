@@ -8,33 +8,40 @@ import {
   signOut,
 } from "firebase/auth";
 // Store Import
-import store from "@/store/index.js";
+// import store from "@/store/index.js";
+
 // Vue functions
 import { computed, onMounted, ref } from "vue";
 import { loadInvestments } from "./database";
+import { useUserStore } from "../stores/user";
+import { useCryptoStore } from "../stores/cryptos";
 // Calling auth function from firebase and using the configuration.
-const auth = getAuth(firebaseApp);
-let authFlag = true;
-
+const auth = getAuth();
 // Listens to any authentication changes, when the user does refresh the page.
 // User's sign in data is still there until they sign out.
 export const useAuth = () => {
+  const userStore = useUserStore();
+  const cryptoStore = useCryptoStore();
   const user = ref(null);
   const error = {
     code: null,
     message: null,
   };
+
+  // console.log(test.user);
   // isLogin helps reactive components check authentication state.
   const isLogin = ref(false);
   onMounted(() => {
     onAuthStateChanged(auth, (data) => {
-      if (data && authFlag) {
-        authFlag = false;
+      if (data) {
+        // authFlag = false;
         isLogin.value = true;
-        console.log("User Firebase", isLogin.value);
-        store.commit("user/getUserData", data);
-        loadInvestments();
         user.value = data;
+        setTimeout(() => {
+          userStore.getUserData(data);
+          userStore.getLoginState(true);
+          loadInvestments();
+        }, 1000);
       } else {
         isLogin.value = false;
       }
@@ -58,9 +65,14 @@ export const useAuth = () => {
 
   const googleSignOut = () => {
     // Clear store states
-    store.commit("user/clearUser");
-    store.commit("cryptos/clearState");
-    store.commit("cryptos/clearUserCrypto");
+    // store.commit("user/clearUser");
+    userStore.clearUser();
+    // store.commit("cryptos/clearState");
+    cryptoStore.clearState();
+    // store.commit("cryptos/clearUserCrypto");
+    cryptoStore.clearUserCrypto();
+    // store.commit("user/getLoginState", isLogin.value);
+    userStore.getLoginState(false);
     signOut(auth).then(() => {
       console.log("User Signed out");
     });
@@ -68,3 +80,5 @@ export const useAuth = () => {
   // monitorAuthState();
   return { user, isLogin, googleSignIn, googleSignOut };
 };
+export const getUserState = () =>
+  new Promise((resolve, reject) => onAuthStateChanged(auth, resolve, reject));
