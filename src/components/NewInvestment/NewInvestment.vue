@@ -29,10 +29,7 @@
 import SearchResults from "@/components/NewInvestment/SearchResults.vue";
 import CreateTransaction from "@/components/NewInvestment/CreateTransaction.vue";
 import { onMounted, reactive, computed } from "vue";
-import { useStore } from "vuex";
-import { mapGetters } from "vuex";
-
-const store = useStore();
+import { useCryptoStore } from "../../stores/cryptos";
 const investment = reactive({
   cryptoName: "",
   crypto: null,
@@ -40,19 +37,16 @@ const investment = reactive({
   total: 0,
   matches: null,
 });
+const cryptoStore = useCryptoStore();
 onMounted(() => {
-  retrieveData();
+  cryptoStore.loadCryptos();
 });
-
-const retrieveData = async () => {
-  store.dispatch("cryptos/loadCryptos");
-};
 const filterData = async () => {
   // User inputs will filter through Vuex state to find the crypto by ID or Symbol
   // Stores data retrieved into matches
   let name = investment.cryptoName;
   investment.crypto = null;
-  let getCrypto = await store.getters["cryptos/getCryptoByName"](name);
+  let getCrypto = cryptoStore.getCryptoByName(name);
   // Clear Matches after search
   if (name === "") {
     investment.matches = [];
