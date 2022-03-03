@@ -45,14 +45,15 @@
  * Pulls user crypto data from store/cryptos/getState and displays it to the DOM.
  * Route user to pages/user/CryptoDetail once clicked on the specific crypto.
  */
-import { useStore } from "vuex";
+// import { useStore } from "vuex";
+import { useCryptoStore } from "../../stores/cryptos";
 import { computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
-const store = useStore();
+const cryptoStore = useCryptoStore();
 const router = useRouter();
-
-const userCryptos = computed(() => store.getters["cryptos/getState"]);
-
+const userCryptos = computed(() => {
+  return cryptoStore.userCryptos;
+});
 const routeTo = (name) => {
   router.push({
     path: `/user/${name}`,
