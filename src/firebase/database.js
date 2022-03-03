@@ -14,7 +14,8 @@ import {
 } from "firebase/firestore";
 // User needs to have an account to start saving data to their UID
 import store from "@/store/index.js";
-
+import { useCryptoStore } from "../stores/cryptos";
+import { useUserStore } from "../stores/user";
 // Database base
 const db = getFirestore(firebaseApp);
 
@@ -23,11 +24,12 @@ const investmentRef = collection(db, "investment");
 
 export const loadInvestments = async () => {
   try {
-    const userState = store.state.user.user;
+    const cryptoStore = useCryptoStore();
+    const userStore = useUserStore();
+    const userState = userStore.user;
     // Checks if there is a user, if so pull their data.
     if (userState !== null) {
-      const userID = await store.state.user.user.uid;
-      // Query search document by userID
+      const userID = userStore.user.uid;
       const q = query(investmentRef, where("userID", "==", userID));
       // When unsubscribe is called, it will stop listening to updates to the database.
       // Currently it is always listening to changes to investment collection where a document's userID is signed in user's id.
@@ -39,11 +41,13 @@ export const loadInvestments = async () => {
           cryptos.push(doc.data());
           docID.push({ collection: doc.data().collection, docID: doc.id });
         });
-        store.dispatch("cryptos/loadUserCryptos", cryptos);
-        store.commit("cryptos/loadUserCryptosID", docID);
+        // store.dispatch("cryptos/loadUserCryptos", cryptos);
+        cryptoStore.loadUserCryptos(cryptos);
+        // store.commit("cryptos/loadUserCryptosID", docID);
+        cryptoStore.loadUserCryptosID(docID);
       });
     } else {
-      return;
+      console.log("Error loading investments");
     }
   } catch (error) {
     console.log("Loading investment: ", error);
