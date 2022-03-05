@@ -1,13 +1,10 @@
 <!-- Displays user's crypto data -->
 <template>
-  <div class="flex">
-    <div class="basis-1/2">
-      <h2 class="text-2xl">Your investments</h2>
-      <div class="grid gap-4">
-        <Table />
-      </div>
+  <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div>
+      <h2 class="text-xl text-white">Investments</h2>
+      <Table />
     </div>
-    <div class="basis-1/2">Pie chart/graph area</div>
   </div>
 </template>
 
