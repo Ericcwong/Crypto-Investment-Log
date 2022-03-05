@@ -1,0 +1,14 @@
+<template>
+  <div class="flex justify-center items-center col-span-2 row-span-4">
+    <Swap />
+  </div>
+
+  <div class="col-span-2 row-span-2">
+    <LoadInvestment />
+  </div>
+</template>
+
+<script setup>
+import LoadInvestment from "../components/LoadInvestment/index.vue";
+import Swap from "../components/Swap/index.vue";
+</script>
