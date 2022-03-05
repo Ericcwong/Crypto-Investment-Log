@@ -13,7 +13,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 // User needs to have an account to start saving data to their UID
-import store from "@/store/index.js";
+
 import { useCryptoStore } from "../stores/cryptos";
 import { useUserStore } from "../stores/user";
 // Database base
@@ -41,6 +41,7 @@ export const loadInvestments = async () => {
           cryptos.push(doc.data());
           docID.push({ collection: doc.data().collection, docID: doc.id });
         });
+        console.log("Loading... ", cryptos);
         // store.dispatch("cryptos/loadUserCryptos", cryptos);
         cryptoStore.loadUserCryptos(cryptos);
         // store.commit("cryptos/loadUserCryptosID", docID);
@@ -56,8 +57,10 @@ export const loadInvestments = async () => {
 
 export const addInvestment = async (data) => {
   try {
-    const userID = await store.state.user.user.uid;
-    const docIDS = await store.state.cryptos.userCryptosID;
+    const cryptoStore = useCryptoStore();
+    const userStore = useUserStore();
+    const userID = await userStore.user.uid;
+    const docIDS = await cryptoStore.userCryptosID;
     const docID = "";
 
     // Crypto's name
@@ -95,9 +98,10 @@ export const addInvestment = async (data) => {
   }
 };
 const addNewUser = async (data) => {
-  console.log;
-  const userID = await store.state.user.user.uid;
-  const username = await store.state.user.user.displayName;
+  const cryptoStore = useCryptoStore();
+  const userStore = useUserStore();
+  const userID = await userStore.user.uid;
+  const username = await userStore.user.displayName;
   const userRef = doc(db, "user", userID);
   await setDoc(
     userRef,

@@ -41,7 +41,7 @@ export const useAuth = () => {
           userStore.getUserData(data);
           userStore.getLoginState(true);
           loadInvestments();
-        }, 1000);
+        }, 500);
       } else {
         isLogin.value = false;
       }
