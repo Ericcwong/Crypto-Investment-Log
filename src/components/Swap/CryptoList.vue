@@ -9,14 +9,7 @@
         class="flex justify-between items-center hover:bg-slate-300 hover:cursor-pointer"
         v-for="(userCrypto, index) in userCryptos"
         :key="index"
-        @click="
-          chooseCrypto({
-            index: index,
-            current_price: userCrypto.current_price,
-            symbol: userCrypto.symbol,
-            quantity: userCrypto.total_quantity,
-          })
-        "
+        @click="chooseCrypto(userCrypto)"
       >
         <img
           class="w-14"
@@ -35,12 +28,11 @@
 </template>
 
 <script setup>
-import { useStore } from "vuex";
+import { useCryptoStore } from "../../stores/cryptos";
 import { computed, onMounted } from "vue";
 const emit = defineEmits(["changeCrypto"]);
-const store = useStore();
-
-let userCryptos = computed(() => store.getters["cryptos/getUserCrypto"]);
+const cryptoStore = useCryptoStore();
+let userCryptos = computed(() => cryptoStore.getUserCrypto);
 const chooseCrypto = (data) => {
   emit("changeCrypto", data);
 };
