@@ -14,12 +14,6 @@ export const useCryptoStore = defineStore("crypto", {
         this.cryptos.push(element);
       });
     },
-    loadUserCrypto(payload) {
-      this.userCryptos = [];
-      payload.forEach((element) => {
-        this.userCryptos.push(element);
-      });
-    },
     updateUserCrypto(payload) {
       payload.forEach((element) => {
         this.userCryptos.push(element);
@@ -55,7 +49,8 @@ export const useCryptoStore = defineStore("crypto", {
     async loadUserCryptos(payload) {
       try {
         const data = await this.calculateUserCrypto(payload);
-        this.loadUserCrypto(data); // Need to pass calculated total afterwards
+        this.userCryptos = data;
+        // Need to pass calculated total afterwards
       } catch (error) {
         console.log("Loading user's crypto", error);
       }
@@ -113,10 +108,11 @@ export const useCryptoStore = defineStore("crypto", {
     // Filter array of duplicates and returns only one of each crypto
     getUserCrypto(state) {
       console.log(state.userCryptos);
-      let data = state.userCryptos.sort(async (a, b) => {
+      let data = state.userCryptos.sort((a, b) => {
         // Sorts and orders cryptos by highest total asset price.
-        return (await b.total_price) - (await a.total_price);
+        return b.total_price - a.total_price;
       });
+      console.log("getUserCrypto Data", data);
       return data;
     },
     getCrypto: (state) => async (name) => {
