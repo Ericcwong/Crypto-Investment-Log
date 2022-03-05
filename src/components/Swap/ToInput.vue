@@ -6,22 +6,21 @@
         class="w-full text-3xl bg-slate-600"
         type="number"
         placeholder="0.00"
-        v-model="quantity"
+        v-model="tradeQuantity"
       />
-      <Modal @close="toggleModal" :modalActive="modalActive">
-        <CryptoList @changeCrypto="changeCryptoTwo" />
-      </Modal>
+
       <div class="flex flex-col">
         <button @click="toggleModal">
           <div class="flex items-center">
             <img
+              v-if="chosenCrypto.crypto"
               class="w-7"
-              :src="userCrypto[selectedCryptoTwo.index].icon"
+              :src="chosenCrypto.crypto.icon"
               alt="icon"
             />
             <div class="flex items-center ml-2 mr-3">
-              <span class="uppercase mr-1"
-                >{{ userCrypto[selectedCryptoTwo.index].symbol }}
+              <span v-if="chosenCrypto.crypto" class="uppercase mr-1"
+                >{{ chosenCrypto.crypto.symbol }}
               </span>
               <font-awesome-icon class="text-sm" icon="caret-down" />
             </div>
@@ -33,32 +32,37 @@
         </div>
       </div>
     </div>
+    <Modal @close="toggleModal" :modalActive="modalActive">
+      <CryptoList @changeCrypto="changeCrypto" />
+    </Modal>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, reactive, computed } from "vue";
+import InputNumber from "primevue/inputnumber";
 import Modal from "@/components/UI/Modal/index.vue";
 import Button from "@/components/UI/Button.vue";
 import CryptoList from "./CryptoList.vue";
+import { useCryptoStore } from "../../stores/cryptos";
+const cryptoStore = useCryptoStore();
 const props = defineProps({
   userCrypto: Array,
-  selectedCryptoTwo: Object,
 });
-const quantity = ref(null);
-const emit = defineEmits(["updateCrypto"]);
+
+const chosenCrypto = reactive({
+  crypto: computed(() => {
+    return cryptoStore.userCryptos[1];
+  }),
+});
+
 const modalActive = ref(false);
+const tradeQuantity = ref(null);
 const toggleModal = () => {
   modalActive.value = !modalActive.value;
 };
-const changeCryptoTwo = (data) => {
-  emit("updateCrypto", data);
+const changeCrypto = (data) => {
+  chosenCrypto.crypto = data;
   toggleModal();
-};
-const half = () => {
-  quantity.value = props.selectedCryptoTwo.quantity / 2;
-};
-const max = () => {
-  quantity.value = props.selectedCryptoTwo.quantity;
 };
 </script>
