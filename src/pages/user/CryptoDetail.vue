@@ -18,13 +18,13 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
 import { reactive, onMounted, watch } from "vue";
-import { useStore } from "vuex";
+import { useCryptoStore } from "../../stores/cryptos";
 import { deleteInvestment, deleteTransaction } from "@/firebase/database.js";
 
 const router = useRouter();
 // const route = useRoute();
 
-const store = useStore();
+const cryptoStore = useCryptoStore();
 const state = reactive({
   name: "",
   docID: "",
@@ -38,7 +38,7 @@ onMounted(() => {
   getCrypto();
 });
 watch(
-  () => store.state.cryptos.userCryptos,
+  () => cryptoStore.userCryptos,
   (first, second) => {
     console.log("First", first);
 
@@ -48,8 +48,8 @@ watch(
   }
 );
 const getCrypto = async () => {
-  const storeState = store.state.cryptos.userCryptos;
-  const docIDS = store.state.cryptos.userCryptosID;
+  const storeState = cryptoStore.userCryptos;
+  const docIDS = cryptoStore.userCryptosID;
   let data = storeState.find((crypto) => crypto.collection === state.name);
   let findDocID = docIDS.find((id) => id.collection === state.name);
   console.log(findDocID);
@@ -70,7 +70,7 @@ const deleteDocument = () => {
   }
 };
 const deleteData = async (data) => {
-  const storeState = await store.state.cryptos.userCryptos;
+  const storeState = await cryptoStore.userCryptos;
   let crypto = storeState.find((crypto) => crypto.collection === state.name);
   crypto.data.splice(data, 1);
   deleteTransaction(state.docID, crypto.data);
