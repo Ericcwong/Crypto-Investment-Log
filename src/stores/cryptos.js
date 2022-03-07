@@ -73,11 +73,18 @@ export const useCryptoStore = defineStore("crypto", {
             }
             // return previous + current.quantity;
           }, 0);
-          let price = await axios.get(
-            `https://api.coingecko.com/api/v3/simple/price?ids=${doc.collection}&vs_currencies=usd`
-          );
-          let currentPrice = price.data[doc.collection].usd;
-
+          // let price = await axios.get(
+          //   `https://api.coingecko.com/api/v3/simple/price?ids=${doc.collection}&vs_currencies=usd`
+          // );
+          let getPrice = this.cryptos.find((apiCrypto) => {
+            // doc.collection = name.id;
+            if (apiCrypto.id === doc.collection) {
+              // console.log(apiCrypto);
+              return apiCrypto.current_price;
+            }
+          });
+          let currentPrice = await getPrice.current_price;
+          console.log(currentPrice);
           // // Creates a new property within data array!
           doc.current_price = currentPrice;
           doc.total_price = totalPrice;
