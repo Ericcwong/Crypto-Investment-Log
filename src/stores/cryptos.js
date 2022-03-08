@@ -6,19 +6,11 @@ export const useCryptoStore = defineStore("crypto", {
       cryptos: [],
       userCryptos: [],
       userCryptosID: [],
+      fromCrypto: null,
+      toCrypto: null,
     };
   },
   actions: {
-    loadCryptos(payload) {
-      payload.forEach((element) => {
-        this.cryptos.push(element);
-      });
-    },
-    updateUserCrypto(payload) {
-      payload.forEach((element) => {
-        this.userCryptos.push(element);
-      });
-    },
     loadUserCryptosID(payload) {
       this.userCryptosID = payload;
     },
@@ -35,12 +27,11 @@ export const useCryptoStore = defineStore("crypto", {
           let response = await axios.get(
             `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=${i}&sparkline=false`
           );
-          console.log(response);
+          // console.log(response);
           let cryptos = response.data;
           cryptos.forEach((element) => {
             this.cryptos.push(element);
           });
-          //   this.loadCryptos(cryptos);
         }
       } catch (error) {
         console.log(error);
@@ -49,8 +40,9 @@ export const useCryptoStore = defineStore("crypto", {
     async loadUserCryptos(payload) {
       try {
         const data = await this.calculateUserCrypto(payload);
+        console.log(data);
         this.userCryptos = data;
-        // Need to pass calculated total afterwards
+        this.loadSwapCrypto();
       } catch (error) {
         console.log("Loading user's crypto", error);
       }
@@ -71,11 +63,7 @@ export const useCryptoStore = defineStore("crypto", {
             } else {
               return previous - current.quantity;
             }
-            // return previous + current.quantity;
           }, 0);
-          // let price = await axios.get(
-          //   `https://api.coingecko.com/api/v3/simple/price?ids=${doc.collection}&vs_currencies=usd`
-          // );
           let getPrice = this.cryptos.find((apiCrypto) => {
             // doc.collection = name.id;
             if (apiCrypto.id === doc.collection) {
@@ -84,7 +72,6 @@ export const useCryptoStore = defineStore("crypto", {
             }
           });
           let currentPrice = await getPrice.current_price;
-          console.log(currentPrice);
           // // Creates a new property within data array!
           doc.current_price = currentPrice;
           doc.total_price = totalPrice;
@@ -100,6 +87,26 @@ export const useCryptoStore = defineStore("crypto", {
         })
       );
       return calculatedPayload;
+    },
+    async loadSwapCrypto() {
+      let data = this.userCryptos.sort((a, b) => {
+        // Sorts and orders cryptos by highest total asset price.
+        return b.total_price - a.total_price;
+      });
+      this.fromCrypto = data[0];
+      console.log("Swap 1");
+      this.toCrypto = data[1];
+      console.log("Swap 2");
+
+      console.log(this.fromCrypto);
+      console.log(this.toCrypto);
+    },
+    swapCrypto() {
+      // console.table(fromCrypto.value);
+      // console.table(toCrypto.value);
+      [this.fromCrypto, this.toCrypto] = [this.toCrypto, this.fromCrypto];
+      // console.table(fromCrypto.value);
+      // console.table(toCrypto.value);
     },
   },
   getters: {
