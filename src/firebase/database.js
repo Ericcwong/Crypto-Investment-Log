@@ -41,7 +41,6 @@ export const loadInvestments = async () => {
           cryptos.push(doc.data());
           docID.push({ collection: doc.data().collection, docID: doc.id });
         });
-        console.log("Loading... ", cryptos);
         // store.dispatch("cryptos/loadUserCryptos", cryptos);
         cryptoStore.loadUserCryptos(cryptos);
         // store.commit("cryptos/loadUserCryptosID", docID);
