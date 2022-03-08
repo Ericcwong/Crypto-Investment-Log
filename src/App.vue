@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-  <div>
+  <div class="min-h-full">
     <TransitionRoot as="template" :show="sidebarOpen">
       <Dialog
         as="div"
@@ -283,6 +283,7 @@ import {
   UsersIcon,
   XIcon,
 } from "@heroicons/vue/outline";
+import { LogoutIcon, PlusIcon, LoginIcon } from "@heroicons/vue/solid";
 const userStore = useUserStore();
 const router = useRouter();
 const modalActive = ref(false);
@@ -312,7 +313,7 @@ const loginNav = [
     runFunction: () => {
       toggleModal();
     },
-    icon: UsersIcon,
+    icon: PlusIcon,
     current: false,
   },
   {
@@ -320,7 +321,7 @@ const loginNav = [
     runFunction: () => {
       googleSignOut();
     },
-    icon: UsersIcon,
+    icon: LogoutIcon,
     current: false,
   },
 ];
@@ -330,7 +331,7 @@ const defaultNav = [
     runFunction: () => {
       googleSignIn();
     },
-    icon: HomeIcon,
+    icon: LoginIcon,
     current: true,
   },
 ];
