@@ -1,9 +1,9 @@
 <template>
-  <div class="flex justify-center items-center col-span-2 row-span-4">
+  <div class="flex justify-center items-center py-10">
     <Swap />
   </div>
 
-  <div class="col-span-2 row-span-2">
+  <div class="pb-10">
     <LoadInvestment />
   </div>
 </template>
