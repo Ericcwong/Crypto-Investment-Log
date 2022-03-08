@@ -1,12 +1,6 @@
 <template>
-  <section
-    id="current-investment"
-    class="grid grid-flow-col grid-cols-2 grid-rows-6 min-h-screen bg-gray-900"
-  >
-    <HomeContent
-      v-if="!isLogin"
-      class="flex justify-center items-center col-span-2 row-span-6"
-    />
+  <section id="current-investment" class="bg-gray-900">
+    <HomeContent v-if="!isLogin" class="flex justify-center items-center" />
     <!-- If user is logged in -->
     <Dashboard v-if="isLogin" />
   </section>
