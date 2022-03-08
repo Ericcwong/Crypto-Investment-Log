@@ -3,27 +3,41 @@
  -->
 
 <template>
-  <div class="text-black h-full">
-    <div class="grid gap-4">
-      <div
-        class="flex justify-between items-center hover:bg-slate-300 hover:cursor-pointer"
-        v-for="(userCrypto, index) in userCryptos"
-        :key="index"
-        @click="chooseCrypto(userCrypto)"
-      >
-        <img
-          class="w-14"
-          :src="userCrypto.icon"
-          :alt="`${userCrypto.collection} icon`"
-        />
-        <span class="flex justify-center capitalize">{{
-          userCrypto.collection
-        }}</span>
+  <div
+    class="h-full overflow-y-auto scrollbar scrollbar-thumb-gray-200 scrollbar-track-gray-900"
+  >
+    <table class="w-full text-white divide-y divide-gray-200">
+      <thead class="min-w-full">
+        <tr>
+          <th class="text-xl text-left">Coin</th>
+          <th class="text-xl">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="hover:bg-slate-300 hover:cursor-pointer"
+          v-for="(userCrypto, index) in userCryptos"
+          :key="index"
+          @click="chooseCrypto(userCrypto)"
+        >
+          <td class="flex items-center py-2">
+            <img
+              class="w-12 rounded-full"
+              :src="userCrypto.icon"
+              :alt="`${userCrypto.collection} icon`"
+            />
+            <span class="flex justify-center capitalize">{{
+              userCrypto.collection
+            }}</span>
+          </td>
+          <td class="text-center py-2">
+            {{ userCrypto.total_quantity }}
+          </td>
+        </tr>
+      </tbody>
 
-        <span class="flex justify-end">{{ userCrypto.total_quantity }}</span>
-      </div>
-    </div>
-    <!-- <Button>Add another crypto</Button> -->
+      <!-- <Button>Add another crypto</Button> -->
+    </table>
   </div>
 </template>
 
