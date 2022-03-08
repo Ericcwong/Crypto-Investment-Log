@@ -17,7 +17,7 @@
         <!-- Modal Content -->
         <div
           v-show="modalActive"
-          class="relative max-w-screen-sm h-4/6 w-5/6 bg-slate-400 p-16 rounded"
+          class="relative max-w-screen-sm h-4/6 w-5/6 bg-gray-800 p-16 rounded"
         >
           <font-awesome-icon
             @click="close"
