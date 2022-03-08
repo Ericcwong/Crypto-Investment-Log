@@ -1,6 +1,5 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import store from "./store/index.js";
 import { createPinia } from "pinia";
 import router from "./router";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -34,7 +33,6 @@ library.add(
 createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon)
   .use(PrimeVue)
-  .use(createPinia())
   .use(router)
-  .use(store)
+  .use(createPinia())
   .mount("#app");
