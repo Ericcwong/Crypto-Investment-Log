@@ -81,16 +81,20 @@ const half = () => {
   console.log(chosenCrypto.crypto);
   console.log(tradeQuantity.value);
   tradeQuantity.value = chosenCrypto.crypto.total_quantity / 2;
+  chosenCrypto.crypto.tradeQuantity = tradeQuantity.value;
+  console.log(chosenCrypto.crypto);
 };
 const max = () => {
   tradeQuantity.value = chosenCrypto.crypto.total_quantity;
+  chosenCrypto.crypto.tradeQuantity = tradeQuantity.value;
 };
 const checkAmount = () => {
-  console.log(tradeQuantity.value);
-  console.log(chosenCrypto.crypto.total_quantity);
   if (tradeQuantity.value <= chosenCrypto.crypto.total_quantity) {
     overQuantity.value = false;
-    emit("amountPass", overQuantity.value);
+    chosenCrypto.crypto.tradeQuantity = tradeQuantity.value;
+    emit("amountPass", {
+      overQuantity: overQuantity.value,
+    });
   } else {
     overQuantity.value = true;
     emit("amountPass", overQuantity.value);
