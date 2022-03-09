@@ -108,6 +108,12 @@ export const useCryptoStore = defineStore("crypto", {
       // console.table(fromCrypto.value);
       // console.table(toCrypto.value);
     },
+    swapAssets() {
+      let from = this.fromCrypto;
+      let to = this.toCrypto;
+      console.log(from);
+      console.log(to);
+    },
   },
   getters: {
     getCryptoByName: (state) => (name) => {
