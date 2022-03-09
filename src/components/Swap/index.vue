@@ -15,12 +15,21 @@
 
     <!-- To Input -->
     <ToInput />
-    <Button
-      :class="
-        overAmount ? ' bg-red-400 text-decoration: line-through' : 'text-white'
-      "
-      name="Submit"
-    />
+    <div>
+      <Button
+        class="w-full"
+        :class="
+          overAmount
+            ? ' text-decoration: line-through background: bg-red-500'
+            : 'text-white'
+        "
+        name="Submit"
+        @click.prevent="swapAsset"
+      />
+      <span v-if="overAmount" class="text-red-500"
+        >Cannot submit, From amount is over amount available.</span
+      >
+    </div>
   </div>
 </template>
 
@@ -32,10 +41,16 @@ import ToInput from "./ToInput.vue";
 import Button from "@/components/UI/Button.vue";
 const cryptoStore = useCryptoStore();
 const overAmount = ref(false);
-
 const checkAmount = (data) => {
-  overAmount.value = data;
+  overAmount.value = data.overQuantity;
 };
-
+// Runs function from store
 const swapCrypto = () => cryptoStore.swapCrypto();
+const swapAsset = () => {
+  if (!overAmount.value) {
+    cryptoStore.swapAssets();
+  } else {
+    overAmount.active = true;
+  }
+};
 </script>
