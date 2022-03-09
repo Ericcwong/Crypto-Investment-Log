@@ -78,11 +78,8 @@ const changeCrypto = (data) => {
   toggleModal();
 };
 const half = () => {
-  console.log(chosenCrypto.crypto);
-  console.log(tradeQuantity.value);
   tradeQuantity.value = chosenCrypto.crypto.total_quantity / 2;
   chosenCrypto.crypto.tradeQuantity = tradeQuantity.value;
-  console.log(chosenCrypto.crypto);
 };
 const max = () => {
   tradeQuantity.value = chosenCrypto.crypto.total_quantity;
