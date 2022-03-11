@@ -7,7 +7,7 @@
   <TransitionRoot as="template" :show="modalActive">
     <Dialog as="div" class="fixed z-10 inset-0 overflow-y-auto" @close="close">
       <div
-        class="flex items-end justify-center min-h-screen pt-10 px-10 pb-20 text-center sm:block sm:p-0"
+        class="flex items-center justify-center min-h-screen pt-10 px-10 pb-20 text-center sm:block sm:p-0"
       >
         <TransitionChild
           as="template"
@@ -39,7 +39,7 @@
           leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         >
           <div
-            class="relative inline-block align-bottom bg-gray-800 text-white rounded-lg px-4 pt-14 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+            class="relative inline-block align-bottom bg-gray-800 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
           >
             <div class="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
               <button
