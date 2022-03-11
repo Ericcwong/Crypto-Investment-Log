@@ -4,35 +4,71 @@
   -- https://www.youtube.com/watch?v=NFdvWBh-D6k
  -->
 <template>
-  <!-- Transitions are Vue animations for enter and leaving -->
-  <transition name="modal-animation">
-    <!-- Modal body -->
-    <div
-      v-show="modalActive"
-      class="flex justify-center items-center h-screen w-screen fixed top-0 left-0 drop-shadow-xl"
-      @click.self="close"
-    >
-      <!-- Modal container -->
-      <transition name="modal-animation-inner" v-show="modalActive">
-        <!-- Modal Content -->
-        <div
-          v-show="modalActive"
-          class="relative max-w-screen-sm h-4/6 w-5/6 bg-gray-800 p-16 rounded"
+  <TransitionRoot as="template" :show="modalActive">
+    <Dialog as="div" class="fixed z-10 inset-0 overflow-y-auto" @close="close">
+      <div
+        class="flex items-end justify-center min-h-screen pt-10 px-10 pb-20 text-center sm:block sm:p-0"
+      >
+        <TransitionChild
+          as="template"
+          enter="ease-out duration-300"
+          enter-from="opacity-0"
+          enter-to="opacity-100"
+          leave="ease-in duration-200"
+          leave-from="opacity-100"
+          leave-to="opacity-0"
         >
-          <font-awesome-icon
-            @click="close"
-            class="text-black absolute top-4 right-4 text-3xl cursor-pointer hover:text-red-500"
-            icon="times-circle"
+          <DialogOverlay
+            class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
           />
-          <slot />
-          <!-- <button class="absolute bottom-0" @click="close">Close</button> -->
-        </div>
-      </transition>
-    </div>
-  </transition>
+        </TransitionChild>
+
+        <!-- This element is to trick the browser into centering the modal contents. -->
+        <span
+          class="hidden sm:inline-block sm:align-middle sm:h-screen"
+          aria-hidden="true"
+          >&#8203;</span
+        >
+        <TransitionChild
+          as="template"
+          enter="ease-out duration-300"
+          enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+          enter-to="opacity-100 translate-y-0 sm:scale-100"
+          leave="ease-in duration-200"
+          leave-from="opacity-100 translate-y-0 sm:scale-100"
+          leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+        >
+          <div
+            class="relative inline-block align-bottom bg-gray-800 text-white rounded-lg px-4 pt-14 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+          >
+            <div class="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
+              <button
+                type="button"
+                class="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                @click="close"
+              >
+                <span class="sr-only">Close</span>
+                <XIcon class="h-6 w-6" aria-hidden="true" />
+              </button>
+            </div>
+            <slot />
+          </div>
+        </TransitionChild>
+      </div>
+    </Dialog>
+  </TransitionRoot>
 </template>
 
 <script setup>
+import { ref } from "vue";
+import {
+  Dialog,
+  DialogOverlay,
+  DialogTitle,
+  TransitionChild,
+  TransitionRoot,
+} from "@headlessui/vue";
+import { ExclamationIcon, XIcon } from "@heroicons/vue/outline";
 const props = defineProps({
   modalActive: Boolean,
 });
@@ -42,30 +78,3 @@ const close = (data) => {
   emit("close");
 };
 </script>
-
-<style scoped>
-/* enter-active and leave-active and the other all are coming from Vue's transitions property. 
-The CSS is generated when the Vue state has been changed */
-.modal-animation-enter-active,
-.modal-animation-leave-active {
-  transition: opacity 0.3s cubic-bezier(0.52, 0.02, 0.19, 1.02);
-}
-.modal-animation-enter-from,
-.modal-animation-leave-to {
-  opacity: 0;
-}
-.modal-animation-inner-enter-active {
-  transition: all 0.3s cubic-bezier(0.52, 0.02, 0.19, 1.02) 0.15s;
-}
-
-.modal-animation-inner-leave-active {
-  transition: all 0.3s cubic-bezier(0.52, 0.02, 0.19, 1.02);
-}
-.modal-animation-inner-enter-from {
-  opacity: 0;
-  transform: scale(0.8);
-}
-.modal-animation-inner-leave-to {
-  transform: scale(0.8);
-}
-</style>
