@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full overflow-y-auto">
+  <div class="h-full overflow-y-auto text-white">
     <div class="" v-for="match in matches" :key="match.id">
       <div
         @click="getMatch(match)"
