@@ -7,22 +7,34 @@
         type="number"
         v-model="data.price"
         @input="calcTotal"
-        class="border-2 border-gray-500"
+        class="border-2 border-gray-500 text-black"
       />
       <label for="price-per-coin">Quantity</label>
       <input
         type="number"
         v-model="data.quantity"
         @input="calcTotal"
-        class="border-2 border-gray-500"
+        class="border-2 border-gray-500 text-black"
       />
       <div class="" v-if="transaction === 'Buy'">
         <label for="purchase">Purchase Date:</label>
-        <input :value="data.date" type="date" id="purchase" name="purchase" />
+        <input
+          :value="data.date"
+          type="date"
+          id="purchase"
+          name="purchase"
+          class="text-black"
+        />
       </div>
       <div class="" v-if="transaction === 'Sell'">
         <label for="purchase">Sell Date:</label>
-        <input v-model="data.date" type="date" id="sell" name="Sell" />
+        <input
+          v-model="data.date"
+          type="date"
+          id="sell"
+          name="Sell"
+          class="text-black"
+        />
       </div>
     </form>
     <div class="flex flex-col items-center justify-center text-xl">

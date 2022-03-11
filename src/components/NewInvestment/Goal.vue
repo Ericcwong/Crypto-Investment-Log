@@ -9,7 +9,7 @@
         type="number"
         v-model="goal.price"
         @input="calcGoal"
-        class="border-2 border-gray-500"
+        class="border-2 border-gray-500 text-black"
       />
     </form>
 

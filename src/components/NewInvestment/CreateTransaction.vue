@@ -1,5 +1,5 @@
 <template>
-  <div v-if="crypto !== null" class="">
+  <div v-if="crypto !== null" class="text-white">
     <!-- Header -->
     <div class="flex items-center justify-center">
       <img :src="crypto.image" alt="" class="w-12" />

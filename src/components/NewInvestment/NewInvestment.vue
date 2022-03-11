@@ -1,7 +1,7 @@
 <template>
   <!-- Wait for User to input a crypto the want -->
   <form
-    class="flex justify-between items-center border-zinc-700 border-2 mb-4 rounded-md"
+    class="flex justify-between items-center border-zinc-700 border-2 mb-4 rounded-md text-black"
   >
     <span class="z-10 absolute">
       <font-awesome-icon class="icon ml-1" icon="search" />
