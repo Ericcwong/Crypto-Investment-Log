@@ -292,6 +292,7 @@ let userUID = computed(() => {
   return userStore.user.userUID;
 });
 const toggleModal = () => {
+  sidebarOpen.value = false;
   modalActive.value = !modalActive.value;
 };
 const routeTo = () => {
