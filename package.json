@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "deploy": "concurrently \"npm run build\" \" firebase deploy\""
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
@@ -15,6 +16,7 @@
     "@heroicons/vue": "^1.0.6",
     "axios": "^0.24.0",
     "chart.js": "^3.7.0",
+    "concurrently": "^7.0.0",
     "cryptocurrencies": "^7.0.0",
     "firebase": "^9.6.0",
     "pinia": "^2.0.11",
