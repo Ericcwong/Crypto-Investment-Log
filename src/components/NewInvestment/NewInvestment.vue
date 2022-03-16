@@ -9,8 +9,9 @@
     <input
       type="text"
       placeholder="Start search"
-      v-model="investment.cryptoName"
-      @input="filterData"
+      :value="cryptoName"
+      @input="(e) => (cryptoName = e.target.value)"
+      @keyup="filterData(cryptoName)"
       class="w-full outline-none pl-6 relative rounded-md"
     />
   </form>
@@ -41,10 +42,10 @@ const cryptoStore = useCryptoStore();
 onMounted(() => {
   cryptoStore.loadCryptos();
 });
-const filterData = async () => {
+const filterData = async (e) => {
   // User inputs will filter through Vuex state to find the crypto by ID or Symbol
   // Stores data retrieved into matches
-  let name = investment.cryptoName;
+  let name = e;
   investment.crypto = null;
   let getCrypto = cryptoStore.getCryptoByName(name);
   // Clear Matches after search
