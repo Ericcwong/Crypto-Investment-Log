@@ -5,17 +5,33 @@
       <img :src="crypto.image" alt="" class="w-12" />
       <h1 class="text-4xl">{{ crypto.name }}</h1>
     </div>
-    <h2 class="text-center">Add Transaction... (Portfolio future upgrade)</h2>
+    <!-- <h2 class="text-center">Add Transaction... (Portfolio future upgrade)</h2> -->
     <!-- Buy Sell Transfer buttons -->
-    <div class="flex justify-evenly text-white bg-gray-800 p-4">
+    <span
+      class="justify-center relative z-0 inline-flex shadow-sm rounded-md w-full mt-3"
+    >
       <button
-        @click="transaction(trans.name)"
-        v-for="trans in transactions"
-        class="text-xl"
+        type="button"
+        class="relative inline-flex items-center px-4 py-2 rounded-l-md border w-1/3 justify-center border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+        @click="transaction('Buy')"
       >
-        {{ trans.name }}
+        Buy
       </button>
-    </div>
+      <button
+        type="button"
+        class="-ml-px relative inline-flex items-center px-4 py-2 border w-1/3 justify-center border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+        @click="transaction('Sell')"
+      >
+        Sell
+      </button>
+      <button
+        type="button"
+        class="-ml-px relative inline-flex items-center px-4 py-2 rounded-r-md border w-1/3 justify-center border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+        @click="transaction('Swap')"
+      >
+        Swap
+      </button>
+    </span>
     <TransactionForm
       :price="crypto.current_price"
       :transaction="transactionType.trans"
@@ -44,7 +60,6 @@ const coinData = reactive({
   icon: props.crypto.image,
 });
 const transactionType = reactive({ trans: "Buy" });
-const transactions = ref([{ name: "Buy" }, { name: "Sell" }, { name: "Swap" }]);
 // Both updateData and updateGoal update state whenever the components data changes.
 const updateData = (event) => {
   coinData.transaction_data = event;
