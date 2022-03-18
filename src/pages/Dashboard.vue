@@ -1,9 +1,9 @@
 <template>
-  <div class="flex justify-center items-center py-10">
-    <Swap />
-  </div>
+  <div class="min-h-full h-full">
+    <div class="flex justify-center items-center py-10">
+      <Swap />
+    </div>
 
-  <div class="pb-10">
     <LoadInvestment />
   </div>
 </template>
