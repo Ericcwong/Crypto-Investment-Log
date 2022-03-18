@@ -1,8 +1,8 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-  <div class="min-h-full grid grid-cols-4">
-    <Navbar class="col-span-1" />
-    <router-view class="col-span-3"></router-view>
+  <div class="min-h-full">
+    <Navbar />
+    <router-view></router-view>
   </div>
 </template>
 
