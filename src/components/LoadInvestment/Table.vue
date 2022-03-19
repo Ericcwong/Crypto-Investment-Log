@@ -69,7 +69,7 @@
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
-                  ${{ crypto.total_price.toFixed(2) }}
+                  ${{ crypto.current_value.toFixed(2) }}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
                   ${{ crypto.average_price }}
