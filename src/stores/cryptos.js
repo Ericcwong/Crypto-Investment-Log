@@ -29,7 +29,6 @@ export const useCryptoStore = defineStore("crypto", {
           let response = await axios.get(
             `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=${i}&sparkline=false`
           );
-          // console.log(response);
           let cryptos = response.data;
           cryptos.forEach((element) => {
             this.cryptos.push(element);
@@ -54,6 +53,7 @@ export const useCryptoStore = defineStore("crypto", {
         payload.map(async (doc) => {
           let totalPrice = doc.data.reduce((previous, current) => {
             if (current.transaction_type === "Buy") {
+              console.log(current);
               return previous + current.price * current.quantity;
             } else {
               return previous - current.price * current.quantity;
@@ -74,6 +74,7 @@ export const useCryptoStore = defineStore("crypto", {
           });
           let currentPrice = await getPrice.current_price;
           // // Creates a new property within data array!
+          doc.current_value = currentPrice * totalQuantity;
           doc.current_price = currentPrice;
           doc.total_price = totalPrice;
           doc.total_quantity = totalQuantity;
@@ -89,9 +90,10 @@ export const useCryptoStore = defineStore("crypto", {
       );
       return calculatedPayload;
     },
+    // When home page mounts, this displays uses's highest and second highest valued cryptos to swap.
     async loadSwapCrypto() {
+      // Sorts and orders cryptos by highest total asset price.
       let data = this.userCryptos.sort((a, b) => {
-        // Sorts and orders cryptos by highest total asset price.
         return b.total_price - a.total_price;
       });
       this.fromCrypto = data[0];
@@ -128,6 +130,7 @@ export const useCryptoStore = defineStore("crypto", {
       return data;
     },
     getState: (state) => state.userCryptos,
+
     // Filter array of duplicates and returns only one of each crypto
     getUserCrypto(state) {
       console.log(state.userCryptos);
