@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, watchEffect } from "vue";
+import { ref, reactive, watchEffect, watch } from "vue";
 import InputNumber from "primevue/inputnumber";
 import Modal from "@/components/UI/Modal/index.vue";
 import Button from "@/components/UI/Button.vue";
@@ -60,7 +60,15 @@ watchEffect(async () => {
   const response = cryptoStore.toCrypto;
   chosenCrypto.crypto = response;
 });
-
+watch(
+  () => cryptoStore.toCrypto,
+  (current, prevToCrypto) => {
+    if (current.swapReturn || !0) {
+      tradeQuantity.value = current.swapReturn;
+    }
+  },
+  { deep: true }
+);
 const modalActive = ref(false);
 const tradeQuantity = ref(null);
 const toggleModal = () => {
