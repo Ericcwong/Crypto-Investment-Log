@@ -47,7 +47,11 @@ import { computed, onMounted } from "vue";
 const emit = defineEmits(["changeCrypto"]);
 const cryptoStore = useCryptoStore();
 let userCryptos = computed(() => cryptoStore.getUserCrypto);
+// Choose a crypto, once chosen, update cryptoStore.toCrypto's data and calculate the swap.
 const chooseCrypto = (data) => {
+  cryptoStore.toCrypto = data;
+  cryptoStore.calculateSwap();
+  console.log(cryptoStore.toCrypto);
   emit("changeCrypto", data);
 };
 </script>
