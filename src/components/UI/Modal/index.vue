@@ -1,8 +1,3 @@
-<!-- Modal when user clicks on new investment -->
-<!-- Notes: Used for this component
-  -- https://v3.vuejs.org/guide/migration/transition.html#_2-x-syntax
-  -- https://www.youtube.com/watch?v=NFdvWBh-D6k
- -->
 <template>
   <TransitionRoot as="template" :show="modalActive">
     <Dialog as="div" class="fixed z-10 inset-0 overflow-y-auto" @close="close">
@@ -51,7 +46,9 @@
                 <XIcon class="h-6 w-6" aria-hidden="true" />
               </button>
             </div>
-            <slot />
+            <div class="m-6">
+              <slot />
+            </div>
           </div>
         </TransitionChild>
       </div>
