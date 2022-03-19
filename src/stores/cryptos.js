@@ -69,7 +69,6 @@ export const useCryptoStore = defineStore("crypto", {
           let getPrice = this.cryptos.find((apiCrypto) => {
             // doc.collection = name.id;
             if (apiCrypto.id === doc.collection) {
-              console.log(apiCrypto);
               return apiCrypto.current_price;
             }
           });
@@ -96,21 +95,27 @@ export const useCryptoStore = defineStore("crypto", {
         return b.total_price - a.total_price;
       });
       this.fromCrypto = data[0];
+      this.fromCrypto.tradeQuantity = null;
       this.toCrypto = data[1];
-
-      console.log(this.fromCrypto);
-      console.log(this.toCrypto);
+      this.toCrypto.tradeQuantity = null;
+    },
+    calculateSwap() {
+      let fromCryptoAmount =
+        this.fromCrypto.current_price * this.fromCrypto.tradeQuantity;
+      let swapReturn = fromCryptoAmount / this.toCrypto.current_price;
+      this.toCrypto.swapReturn = swapReturn;
     },
     //Swap from crypto one position to two and vice-versa.
     swapCrypto() {
+      this.fromCrypto.tradeQuantity = null;
+      this.toCrypto.tradeQuantity = null;
+
       [this.fromCrypto, this.toCrypto] = [this.toCrypto, this.fromCrypto];
     },
     //Swap crypto one value to crypto two.
     swapAssets() {
       let from = this.fromCrypto;
       let to = this.toCrypto;
-      console.log(from);
-      console.log(to);
     },
   },
   getters: {
