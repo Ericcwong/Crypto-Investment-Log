@@ -1,8 +1,5 @@
 <template>
-  <section
-    id="current-investment"
-    class="bg-gray-900 min-h-full h-screen pb-10"
-  >
+  <section id="current-investment" class="bg-gray-900 min-h-full pb-10">
     <HomeContent v-if="!isLogin" class="flex justify-center items-center" />
     <!-- If user is logged in -->
     <Dashboard v-if="isLogin" />
