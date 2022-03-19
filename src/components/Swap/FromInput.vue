@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, watchEffect } from "vue";
+import { ref, reactive, watchEffect, watch } from "vue";
 import InputNumber from "primevue/inputnumber";
 import Modal from "@/components/UI/Modal/index.vue";
 import Button from "@/components/UI/Button.vue";
@@ -59,15 +59,22 @@ console.log(cryptoStore.userCryptos);
 const chosenCrypto = reactive({
   crypto: null,
 });
+const tradeQuantity = ref(null);
+const overQuantity = ref(false);
+const modalActive = ref(false);
 // Vue documentation for watchEffect: https://vuejs.org/guide/essentials/watchers.html#watcheffect
 // Watch effect runs instantly and constantly watches for changes!
 watchEffect(async () => {
   const response = cryptoStore.fromCrypto;
   chosenCrypto.crypto = response;
 });
-const tradeQuantity = ref(null);
-const overQuantity = ref(false);
-const modalActive = ref(false);
+watch(
+  () => cryptoStore.fromCrypto,
+  (fromCrypto, prevFromCrypto) => {
+    tradeQuantity.value = prevFromCrypto;
+    overQuantity.value = false;
+  }
+);
 
 const toggleModal = () => {
   modalActive.value = !modalActive.value;
@@ -89,6 +96,7 @@ const checkAmount = () => {
   if (tradeQuantity.value <= chosenCrypto.crypto.total_quantity) {
     overQuantity.value = false;
     chosenCrypto.crypto.tradeQuantity = tradeQuantity.value;
+    cryptoStore.calculateSwap();
     emit("amountPass", {
       overQuantity: overQuantity.value,
     });
