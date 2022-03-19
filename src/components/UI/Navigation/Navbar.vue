@@ -8,6 +8,7 @@
             <!-- Mobile menu button -->
             <DisclosureButton
               class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              v-if="isLogin"
             >
               <span class="sr-only">Open main menu</span>
               <MenuIcon v-if="!open" class="block h-6 w-6" aria-hidden="true" />
@@ -15,23 +16,25 @@
             </DisclosureButton>
           </div>
           <div class="flex-shrink-0 flex items-center">
+            <h1 class="text-white text-xl">Moon Rocket</h1>
+
             <img
-              class="block lg:hidden h-8 w-auto"
-              src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-              alt="Workflow"
+              class="block lg:hidden h-12 w-auto"
+              src="./rocket.svg"
+              alt="Rocket"
             />
             <img
-              class="hidden lg:block h-8 w-auto"
-              src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
-              alt="Workflow"
+              class="hidden lg:block h-12 w-auto"
+              src="./rocket.svg"
+              alt="Rocket"
             />
           </div>
           <div class="hidden md:ml-6 md:flex md:items-center md:space-x-4">
-            <a
+            <button
               v-if="isLogin"
               v-for="item in loginNav"
               :key="item.name"
-              :href="item.href"
+              @click="item.runFunction"
               :class="[
                 item.current
                   ? 'bg-gray-900 text-white'
@@ -39,8 +42,9 @@
                 'px-3 py-2 rounded-md text-sm font-medium',
               ]"
               :aria-current="item.current ? 'page' : undefined"
-              >{{ item.name }}</a
             >
+              {{ item.name }}
+            </button>
           </div>
         </div>
         <button v-if="!isLogin" class="text-white" @click="googleSignIn()">
@@ -114,8 +118,8 @@
         </div>
       </div>
     </div>
-
-    <DisclosurePanel class="md:hidden">
+    <!-- Mobile View -->
+    <DisclosurePanel class="md:hidden" v-if="isLogin">
       <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
         <DisclosureButton
           v-for="item in loginNav"
@@ -135,7 +139,7 @@
       <div class="pt-4 pb-3 border-t border-gray-700">
         <div class="flex items-center px-5 sm:px-6">
           <div class="flex-shrink-0">
-            <img class="h-10 w-10 rounded-full" :src="user.imageUrl" alt="" />
+            <img class="h-10 w-10 rounded-full" :src="user.photoURL" alt="" />
           </div>
           <div class="ml-3">
             <div class="text-base font-medium text-white">
